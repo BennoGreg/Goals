@@ -3,19 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_goals">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="at.fhooe.mc.goals.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_goals"
+        android:name="at.fhooe.mc.goals.ui.goals.GoalsFragment"
+        android:label="@string/menu_goals"
+        tools:layout="@layout/fragment_goals" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="at.fhooe.mc.goals.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_statistics"
+        android:name="at.fhooe.mc.goals.ui.statistics.StatisticsFragment"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_statistics" />
 
     <fragment
         android:id="@+id/nav_slideshow"
@@ -24,16 +24,16 @@
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="at.fhooe.mc.goals.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_settings"
+        android:name="at.fhooe.mc.goals.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="at.fhooe.mc.goals.ui.share.ShareFragment"
-        android:label="@string/menu_share"
-        tools:layout="@layout/fragment_share" />
+        android:id="@+id/nav_about"
+        android:name="at.fhooe.mc.goals.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/nav_send"

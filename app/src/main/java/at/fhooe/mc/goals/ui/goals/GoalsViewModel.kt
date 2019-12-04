@@ -1,13 +1,13 @@
-package at.fhooe.mc.goals.ui.share
+package at.fhooe.mc.goals.ui.goals
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class ShareViewModel : ViewModel() {
+class GoalsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is share Fragment"
+        value = "This is goals Fragment"
     }
     val text: LiveData<String> = _text
 }

@@ -1,4 +1,4 @@
-package at.fhooe.mc.goals.ui.share
+package at.fhooe.mc.goals.ui.statistics
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import at.fhooe.mc.goals.R
 
-class ShareFragment : Fragment() {
+class StatisticsFragment : Fragment() {
 
-    private lateinit var shareViewModel: ShareViewModel
+    private lateinit var statisticsViewModel: StatisticsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        shareViewModel =
-            ViewModelProviders.of(this).get(ShareViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_share, container, false)
-        val textView: TextView = root.findViewById(R.id.text_share)
-        shareViewModel.text.observe(this, Observer {
+        statisticsViewModel =
+            ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_statistics, container, false)
+        val textView: TextView = root.findViewById(R.id.text_gallery)
+        statisticsViewModel.text.observe(this, Observer {
             textView.text = it
         })
         return root
