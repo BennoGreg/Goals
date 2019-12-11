@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_goals">
+
+    <fragment
+        android:id="@+id/nav_goals"
+        android:name="at.fhooe.mc.goals.ui.goals.GoalsFragment"
+        android:label="@string/menu_goals"
+        tools:layout="@layout/fragment_goals" />
+
+    <fragment
+        android:id="@+id/nav_statistics"
+        android:name="at.fhooe.mc.goals.ui.statistics.StatisticsFragment"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="at.fhooe.mc.goals.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="at.fhooe.mc.goals.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="at.fhooe.mc.goals.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/nav_send"
+        android:name="at.fhooe.mc.goals.ui.send.SendFragment"
+        android:label="@string/menu_send"
+        tools:layout="@layout/fragment_send" />
+</navigation>
