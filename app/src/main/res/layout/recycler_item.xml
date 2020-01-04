@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="15dp">
+    android:padding="15dp"
+    >
 
     <TextView
         android:layout_width="match_parent"
@@ -11,5 +12,14 @@
         android:id="@+id/goalTextView"
         android:text="example"
         android:textSize="20sp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:progress="20"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:scaleY="10"
+        android:progressDrawable="@drawable/rounded_corners_progressbar"/>
 
 </LinearLayout>

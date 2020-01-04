@@ -1,12 +1,18 @@
 package at.fhooe.mc.goals.ui.goals
 
 import android.graphics.Color
+import android.graphics.ColorFilter
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
+import android.graphics.PorterDuff
+import android.widget.ProgressBar
+
+
+
 
 class RecyclerAdapter(private val data: List<Goal>) : RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,8 +29,16 @@ class RecyclerAdapter(private val data: List<Goal>) : RecyclerView.Adapter<MyVie
         val bool = data[position].buildQuit
 
         if (bool != null){
-            if (bool) holder.color = Color.RED
-            else holder.color = Color.GREEN
+            if (bool) {
+                holder.progBar.setProgress(50)
+                holder.progBar.progressDrawable.setTint(Color.GREEN)
+
+            }
+            else {
+                holder.progBar.setProgress(50)
+                holder.progBar.progressDrawable.setTint(Color.RED)
+            }
         }
+
     }
 }

@@ -39,8 +39,8 @@ class GoalsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val activity = activity
         recyclerView.layoutManager = LinearLayoutManager(activity)
-        var data = ArrayList<Goal>()
-        data.add(Goal("Quit smoking", false, 10, 10))
+        val data = ArrayList<Goal>()
+        data.add(Goal("Quit smoking", true, 10, 10))
 
         recyclerView.adapter = RecyclerAdapter(data)
     }
