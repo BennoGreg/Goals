@@ -1,5 +1,6 @@
 package at.fhooe.mc.goals
 
+import android.app.PendingIntent.getActivity
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -9,6 +10,9 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
 
+
+
+
 class NewGoal : AppCompatActivity() {
 
     private lateinit var realm: Realm
@@ -16,6 +20,7 @@ class NewGoal : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_goal)
+
 
         realm = Realm.getDefaultInstance()
 
