@@ -9,39 +9,181 @@
     tools:showIn="@layout/activity_new_goal">
 
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteY="297dp">
 
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Input" />
-
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Save" />
-
-        <Button android:id="@+id/showButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Show" />
 
         <TextView
-            android:id="@+id/showData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Output" />
+            android:id="@+id/reminderTexfield"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="32dp"
+            android:text="Reminder"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frequencyEditText" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/achieveTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:text="Achieve Goal:"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monthlyButton" />
+
+        <Button
+            android:id="@+id/monthlyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Monthly"
+            app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
+            app:layout_constraintEnd_toStartOf="@+id/yearlyButton"
+            app:layout_constraintStart_toEndOf="@+id/weeklyButton"
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+
+        <Button
+            android:id="@+id/yearlyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="Yearly"
+            app:layout_constraintBottom_toTopOf="@id/achieveTextField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/monthlyButton"
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+
+        <Button
+            android:id="@+id/weeklyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Weekly"
+            app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
+            app:layout_constraintEnd_toStartOf="@+id/monthlyButton"
+            app:layout_constraintStart_toEndOf="@+id/dailyButton"
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+
+        <TextView
+            android:id="@+id/goalTypeView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/goal_type_view"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buildButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Build"
+            app:layout_constraintBottom_toTopOf="@+id/goalPeriodTextView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/quitButton"
+            app:layout_constraintTop_toBottomOf="@+id/goalTypeView" />
+
+        <Button
+            android:id="@+id/quitButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="32dp"
+            android:text="Quit"
+            app:layout_constraintBottom_toTopOf="@+id/goalPeriodTextView"
+            app:layout_constraintLeft_toRightOf="@+id/buildButton"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goalTypeView" />
+
+        <TextView
+            android:id="@+id/goalPeriodTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:text="Goal Period:"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buildButton" />
+
+        <Button
+            android:id="@+id/dailyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Daily"
+            app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
+            app:layout_constraintEnd_toStartOf="@+id/weeklyButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+
+        <EditText
+            android:id="@+id/frequencyEditText"
+            android:layout_width="59dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="128dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/frequencyTextField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/achieveTextField" />
+
+        <TextView
+            android:id="@+id/frequencyTextField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="124dp"
+            android:text="times per day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/frequencyEditText"
+            app:layout_constraintTop_toBottomOf="@+id/achieveTextField" />
+
+        <Button
+            android:id="@+id/addReminderButton"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="128dp"
+            android:text="+"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/reminderTexfield"
+            app:layout_constraintTop_toBottomOf="@+id/frequencyEditText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.core.widget.NestedScrollView>

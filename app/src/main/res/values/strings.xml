@@ -15,6 +15,7 @@
     <string name="menu_send">Send</string>
     <string name="section_other">Other</string>
     <string name="title_activity_new_goal">New Goal</string>
+    <string name="goal_type_view">Goal Type:</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
