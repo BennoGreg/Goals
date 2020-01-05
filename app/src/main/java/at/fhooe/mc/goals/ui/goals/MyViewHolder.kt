@@ -14,4 +14,5 @@ class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
     var drawAbleDec: Drawable =  view.resources.getDrawable(R.drawable.rounded_corners_progressbar_decrease,null)
 
 
+    
 }
