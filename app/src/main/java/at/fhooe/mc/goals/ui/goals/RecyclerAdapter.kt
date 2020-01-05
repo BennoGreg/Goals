@@ -25,18 +25,18 @@ class RecyclerAdapter(private val data: List<Goal>) : RecyclerView.Adapter<MyVie
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tv.text = data[position].name
+        //holder.tv.text = data[position].name
         val bool = data[position].buildQuit
 
-        if (bool != null){
+        if (bool != null) {
             if (bool) {
                 holder.progBar.setProgress(50)
-                holder.progBar.progressDrawable.setTint(Color.GREEN)
 
-            }
-            else {
+
+            } else {
                 holder.progBar.setProgress(50)
-                holder.progBar.progressDrawable.setTint(Color.RED)
+                holder.progBar.progressDrawable = holder.drawAbleDec
+                holder.progBar.scaleX = -1f
             }
         }
 
