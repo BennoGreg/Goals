@@ -1,8 +1,6 @@
 package at.fhooe.mc.goals
 
-import android.app.PendingIntent.getActivity
 import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -38,12 +36,45 @@ class NewGoal : AppCompatActivity() {
 
 
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { view ->
+        saveButton.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 
         }
 
+        saveButton.setOnClickListener{
+
+
+            realm.executeTransactionAsync({
+                val goal = it.createObject(Goal::class.java)
+                if (goalNameEditText.text == null){
+                    goal.name = "My Goal"
+                }else {
+                    goal.name = goalNameEditText.text.toString()
+                }
+                goal.buildQuit = build
+                goal.goalPeriod = currentPeriod
+                goal.goalFrequency = frequencyEditText as Int
+                goal.progress = 0
+
+
+            },{
+                Log.d("Goal", "Saved successfully")
+            },{
+                Log.d("Goal", "Not saved")
+            })
+            realm.executeTransactionAsync({
+                val goal = it.createObject(Goal::class.java)
+                //  goal.name = editText.text.toString()
+
+            },{
+                Log.d("Goal", "Saved successfully")
+            },{
+                Log.d("Goal", "Not saved")
+            })
+
+            finish()
+        }
 
 
         buildButton.setOnClickListener {
@@ -53,24 +84,7 @@ class NewGoal : AppCompatActivity() {
             updatePeriodColor(green)
 
 
-            realm.executeTransactionAsync({
-                val goal = it.createObject(Goal::class.java)
-              //  goal.name = editText.text.toString()
 
-            },{
-                Log.d("MyTag", "Saved successfully")
-            },{
-                Log.d("MyTag", "Not saved")
-            })
-            realm.executeTransactionAsync({
-                val goal = it.createObject(Goal::class.java)
-              //  goal.name = editText.text.toString()
-
-            },{
-                Log.d("MyTag", "Saved successfully")
-            },{
-                Log.d("MyTag", "Not saved")
-            })
 
         }
 
@@ -159,16 +173,20 @@ class NewGoal : AppCompatActivity() {
             }
 
         }
-    }
-
-    fun updateAchieveText(){
 
     }
+
+
 
     /**
      * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
      */
     fun setThemeGreen(){
+
+        toolbar.setBackgroundColor(Color.parseColor(green))
+        app_bar.setBackgroundColor(Color.parseColor(green))
+        toolbar_layout.setBackgroundColor(Color.parseColor(green))
+        goalNameTextView.setTextColor(Color.parseColor(green))
         buildButton.setBackgroundColor(Color.parseColor(green))
         quitButton.setBackgroundColor(Color.parseColor("lightgray"))
         goalPeriodTextView.setTextColor(Color.parseColor(green))
@@ -182,6 +200,10 @@ class NewGoal : AppCompatActivity() {
      * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
      */
     fun setThemeOrange(){
+        toolbar.setBackgroundColor(Color.parseColor(orange))
+        app_bar.setBackgroundColor(Color.parseColor(orange))
+        toolbar_layout.setBackgroundColor(Color.parseColor(orange))
+        goalNameTextView.setTextColor(Color.parseColor(orange))
         quitButton.setBackgroundColor(Color.parseColor(orange))
         buildButton.setBackgroundColor(Color.parseColor("lightgray"))
         goalTypeView.setTextColor(Color.parseColor(orange))
@@ -190,6 +212,8 @@ class NewGoal : AppCompatActivity() {
         goalPeriodTextView.setTextColor(Color.parseColor(orange))
 
     }
+
+
 
 
 }
