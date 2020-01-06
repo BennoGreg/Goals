@@ -30,9 +30,9 @@ class NewGoal : AppCompatActivity() {
         setThemeGreen()
         dailyButton.setBackgroundColor(Color.parseColor(green))
         realm = Realm.getDefaultInstance()
-        realm.beginTransaction()
+        /*realm.beginTransaction()
         realm.deleteAll()
-        realm.commitTransaction()
+        realm.commitTransaction()*/
 
 
         setSupportActionBar(toolbar)

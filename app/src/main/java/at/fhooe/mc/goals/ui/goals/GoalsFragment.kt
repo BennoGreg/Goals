@@ -15,13 +15,16 @@ import android.view.MotionEvent
 import android.view.GestureDetector
 import at.fhooe.mc.goals.ui.goals.GoalsFragment.ClickListener
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import at.fhooe.mc.goals.MainActivity
+import io.realm.Realm
 
 
 class GoalsFragment : Fragment() {
 
     private lateinit var goalsViewModel: GoalsViewModel
+    private lateinit var realm: Realm
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +35,8 @@ class GoalsFragment : Fragment() {
             ViewModelProviders.of(this).get(GoalsViewModel::class.java)
 
         val root = inflater.inflate(R.layout.fragment_goals, container, false)
+
+        realm = Realm.getDefaultInstance()
         /*val textView: TextView = root.findViewById(R.id.text_home)
         goalsViewModel.text.observe(this, Observer {
             textView.text = it.name
@@ -45,13 +50,28 @@ class GoalsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val activity = activity
         recyclerView.layoutManager = LinearLayoutManager(activity)
+
+        realm.beginTransaction()
+
+        val result = realm.where(Goal::class.java).findAll()
+
+        realm.commitTransaction()
         val data = ArrayList<Goal>()
-        data.add(Goal("Quit smoking", false,80, 10, 10))
-        data.add(Goal("Learn more", true, 20,  10, 10))
+        if (result != null){
+            data.addAll(realm.copyFromRealm(result))
+        }
+        /*data.add(Goal("Quit smoking", false,80, 10, 10))
+        data.add(Goal("Learn more", true, 20,  10, 10))*/
 
         recyclerView.addOnItemTouchListener(RecyclertouchListener(this.context!!,recyclerView,
             object : ClickListener {
                 override fun onClick(view: View, position: Int) {
+                    Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
+                    //realm.beginTransaction()
+
+                    data[position].progress?.plus(20)
+                    //realm.commitTransaction()
+                    recyclerView.adapter?.notifyItemChanged(position)
                     Toast.makeText(activity,"Single click on $position",Toast.LENGTH_SHORT).show()
                 }
 
