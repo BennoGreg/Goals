@@ -87,14 +87,15 @@ class GoalsFragment : Fragment() {
                 }
             }))*/
 
-        recyclerView.adapter = RecyclerAdapter(data, { goal: Goal, position: Int -> goalClicked(goal, position) })
+        recyclerView.adapter = RecyclerAdapter(data) { goal: Goal, position: Int -> goalClicked(goal, position) }
     }
 
-    private fun goalClicked(goal: Goal, position: Int){
+    private fun goalClicked(goal: Goal, position: Int) : Boolean{
         data[position].progress = data[position].progress!! + 5
         Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
         recyclerView.adapter?.notifyItemChanged(position)
         Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
+        return true
     }
 
     fun testing(list: RealmResults<Goal>){

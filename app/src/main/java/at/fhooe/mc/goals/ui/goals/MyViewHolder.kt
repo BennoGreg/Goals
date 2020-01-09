@@ -15,8 +15,15 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var drawAble: Drawable =  itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_increase,null)
     var drawAbleDec: Drawable =  itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_decrease,null)
 
-    fun bind(goal: Goal, clickListener: (Goal, Int) -> Unit, position: Int){
-        itemView.setOnClickListener { clickListener(goal, position) }
+    fun bind(goal: Goal, clickListener: (Goal, Int) -> Boolean, position: Int){
+        var bool = goal.buildQuit!=null
+        if (!bool){
+            progBar.progressDrawable = drawAbleDec
+            progBar.scaleX = -1f
+        }
+
+        itemView.setOnLongClickListener{clickListener(goal,position)}
+        //itemView.setOnClickListener { clickListener(goal, position) }
     }
 
 
