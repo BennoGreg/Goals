@@ -13,18 +13,21 @@ import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_goals.*
 import android.view.MotionEvent
 import android.view.GestureDetector
-import at.fhooe.mc.goals.ui.goals.GoalsFragment.ClickListener
+
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import at.fhooe.mc.goals.MainActivity
 import io.realm.Realm
+import io.realm.RealmResults
 
 
 class GoalsFragment : Fragment() {
 
     private lateinit var goalsViewModel: GoalsViewModel
     private lateinit var realm: Realm
+
+    val data = ArrayList<Goal>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,6 +40,7 @@ class GoalsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_goals, container, false)
 
         realm = Realm.getDefaultInstance()
+
         /*val textView: TextView = root.findViewById(R.id.text_home)
         goalsViewModel.text.observe(this, Observer {
             textView.text = it.name
@@ -56,20 +60,23 @@ class GoalsFragment : Fragment() {
         val result = realm.where(Goal::class.java).findAll()
 
         realm.commitTransaction()
-        val data = ArrayList<Goal>()
         if (result != null){
             data.addAll(realm.copyFromRealm(result))
         }
+
+
+
+        //testing(result)
         /*data.add(Goal("Quit smoking", false,80, 10, 10))
         data.add(Goal("Learn more", true, 20,  10, 10))*/
 
-        recyclerView.addOnItemTouchListener(RecyclertouchListener(this.context!!,recyclerView,
+        /*recyclerView.addOnItemTouchListener(RecyclertouchListener(this.context!!,recyclerView,
             object : ClickListener {
                 override fun onClick(view: View, position: Int) {
                     Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
                     //realm.beginTransaction()
 
-                    data[position].progress?.plus(20)
+                    data[position].progress = data[position].progress!!+5
                     //realm.commitTransaction()
                     recyclerView.adapter?.notifyItemChanged(position)
                     Toast.makeText(activity,"Single click on $position",Toast.LENGTH_SHORT).show()
@@ -78,11 +85,31 @@ class GoalsFragment : Fragment() {
                 override fun onDoubleClick(view: View, position: Int) {
                     Toast.makeText(activity, "Double tap on position $position", Toast.LENGTH_SHORT).show()
                 }
-            }))
+            }))*/
 
-        recyclerView.adapter = RecyclerAdapter(data)
+        recyclerView.adapter = RecyclerAdapter(data) { goal: Goal, position: Int -> goalClicked(goal, position) }
     }
 
+    private fun goalClicked(goal: Goal, position: Int) : Boolean{
+        data[position].progress = data[position].progress!! + 5
+        Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
+        recyclerView.adapter?.notifyItemChanged(position)
+        Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
+        return true
+    }
+
+    fun testing(list: RealmResults<Goal>){
+        realm.beginTransaction()
+        list[0]?.buildQuit = false
+        list[0]?.progress = 0
+        list[0]?.name = "Quit drinking"
+        list[1]?.name = "Do more sport"
+        list[1]?.buildQuit = true
+        list[1]?.progress = 0
+
+        realm.commitTransaction()
+    }
+/*
     companion object interface ClickListener {
 
         public fun onClick(view: View, position: Int)
@@ -130,5 +157,9 @@ class GoalsFragment : Fragment() {
 
         }
 
-    }
+
+
+
+
+    }*/
 }
