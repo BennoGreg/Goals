@@ -27,6 +27,8 @@ class GoalsFragment : Fragment() {
     private lateinit var goalsViewModel: GoalsViewModel
     private lateinit var realm: Realm
 
+    val data = ArrayList<Goal>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,10 +60,11 @@ class GoalsFragment : Fragment() {
         val result = realm.where(Goal::class.java).findAll()
 
         realm.commitTransaction()
-        val data = ArrayList<Goal>()
         if (result != null){
             data.addAll(realm.copyFromRealm(result))
         }
+
+
 
         //testing(result)
         /*data.add(Goal("Quit smoking", false,80, 10, 10))
@@ -84,7 +87,14 @@ class GoalsFragment : Fragment() {
                 }
             }))*/
 
-        recyclerView.adapter = RecyclerAdapter(data)
+        recyclerView.adapter = RecyclerAdapter(data, { goal: Goal, position: Int -> goalClicked(goal, position) })
+    }
+
+    private fun goalClicked(goal: Goal, position: Int){
+        data[position].progress = data[position].progress!! + 5
+        Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
+        recyclerView.adapter?.notifyItemChanged(position)
+        Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
     }
 
     fun testing(list: RealmResults<Goal>){
@@ -92,6 +102,7 @@ class GoalsFragment : Fragment() {
         list[0]?.buildQuit = false
         list[0]?.progress = 0
         list[0]?.name = "Quit drinking"
+        list[1]?.name = "Do more sport"
         list[1]?.buildQuit = true
         list[1]?.progress = 0
 

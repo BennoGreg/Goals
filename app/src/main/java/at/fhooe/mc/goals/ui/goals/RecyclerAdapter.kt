@@ -14,7 +14,7 @@ import android.widget.ProgressBar
 
 
 
-class RecyclerAdapter(private val data: List<Goal>) : RecyclerView.Adapter<MyViewHolder>() {
+class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, Int) -> Unit) : RecyclerView.Adapter<MyViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item,parent,false)
         return MyViewHolder(view)
@@ -39,6 +39,7 @@ class RecyclerAdapter(private val data: List<Goal>) : RecyclerView.Adapter<MyVie
                 holder.progBar.scaleX = -1f
             }
         }
+        holder.bind(data[position],clickListener,position)
 
     }
 }
