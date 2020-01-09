@@ -63,6 +63,8 @@ class NewGoal : AppCompatActivity() {
             },{
                 Log.d("Goal", "Not saved")
             })
+
+            /*
             realm.executeTransactionAsync({
                 val goal = it.createObject(Goal::class.java)
                 //  goal.name = editText.text.toString()
@@ -72,6 +74,8 @@ class NewGoal : AppCompatActivity() {
             },{
                 Log.d("Goal", "Not saved")
             })
+
+*/
 
             finish()
         }
