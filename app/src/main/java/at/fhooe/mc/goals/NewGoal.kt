@@ -3,7 +3,6 @@ package at.fhooe.mc.goals
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import at.fhooe.mc.goals.Database.Goal
 import io.realm.Realm
@@ -30,22 +29,16 @@ class NewGoal : AppCompatActivity() {
         setThemeGreen()
         dailyButton.setBackgroundColor(Color.parseColor(green))
         realm = Realm.getDefaultInstance()
-        /*realm.beginTransaction()
-        realm.deleteAll()
-        realm.commitTransaction()*/
 
 
         setSupportActionBar(toolbar)
-        saveButton.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
 
-        }
 
         saveButton.setOnClickListener{
 
 
             realm.executeTransactionAsync({
+
                 val goal = it.createObject(Goal::class.java)
                 if (goalNameEditText.text == null){
                     goal.name = "My Goal"
@@ -54,28 +47,14 @@ class NewGoal : AppCompatActivity() {
                 }
                 goal.buildQuit = build
                 goal.goalPeriod = currentPeriod
-                goal.goalFrequency = frequencyEditText as Int
+                goal.goalFrequency = Integer.parseInt(frequencyEditText.text.toString())
                 goal.progress = 0
 
-
             },{
                 Log.d("Goal", "Saved successfully")
             },{
                 Log.d("Goal", "Not saved")
             })
-
-            /*
-            realm.executeTransactionAsync({
-                val goal = it.createObject(Goal::class.java)
-                //  goal.name = editText.text.toString()
-
-            },{
-                Log.d("Goal", "Saved successfully")
-            },{
-                Log.d("Goal", "Not saved")
-            })
-
-*/
 
             finish()
         }
@@ -88,8 +67,6 @@ class NewGoal : AppCompatActivity() {
             updatePeriodColor(green)
 
 
-
-
         }
 
 
@@ -99,15 +76,6 @@ class NewGoal : AppCompatActivity() {
             setThemeOrange()
             build = false
             updatePeriodColor(orange)
-
-            /*realm.beginTransaction()
-
-            val result: Goal? = realm.where(Goal::class.java).findFirst()
-            showData.text = result?.name
-            realm.commitTransaction()*/
-
-            val goals = realm.where(Goal::class.java).findAll()
-           // showData.text = goals[0]?.name + goals[1]?.name
 
         }
 
