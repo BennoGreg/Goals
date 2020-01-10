@@ -17,6 +17,7 @@ import android.view.GestureDetector
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import at.fhooe.mc.goals.FragmentRefreshListener
 import at.fhooe.mc.goals.MainActivity
 import io.realm.Realm
 import io.realm.RealmResults
@@ -45,6 +46,14 @@ class GoalsFragment : Fragment() {
         goalsViewModel.text.observe(this, Observer {
             textView.text = it.name
         })*/
+
+        /*(activity as MainActivity).setFragmentRefreshListener(object : FragmentRefreshListener{
+            override fun onRefresh() {
+
+            }
+        })*/
+
+
 
 
         return root

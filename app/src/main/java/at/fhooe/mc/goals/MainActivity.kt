@@ -15,12 +15,23 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MotionEvent
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import io.realm.Realm
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import at.fhooe.mc.goals.ui.goals.GoalsFragment
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var realm: Realm
+
+    private var fragmentRefreshListener: FragmentRefreshListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +49,8 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
 
             val i = Intent(this,NewGoal::class.java)
-            startActivity(i)
+            i.putExtra("newGoal",0)
+            startActivityForResult(i, 0)
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -55,6 +67,18 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 0){
+
+            finish()
+            startActivity(intent)
+
+
+
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
@@ -69,6 +93,18 @@ class MainActivity : AppCompatActivity() {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return super.onTouchEvent(event)
     }
+
+    public fun getFragmentRefreshListener(): FragmentRefreshListener? {
+        return fragmentRefreshListener
+    }
+
+    public fun setFragmentRefreshListener( fragmentRefreshListener: FragmentRefreshListener){
+        this.fragmentRefreshListener = fragmentRefreshListener
+    }
+}
+
+public interface FragmentRefreshListener{
+    fun onRefresh()
 }
 
 
