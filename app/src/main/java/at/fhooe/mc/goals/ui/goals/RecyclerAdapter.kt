@@ -26,10 +26,17 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         //holder.tv.text = data[position].name
+        holder.bind(data[position],clickListener,position)
         val bool = data[position].buildQuit
         val progress = data[position].progress
         if(progress!=null){
             holder.progBar.setProgress(progress)
+        }
+        bool?.let {
+            if (!bool){
+                holder.progBar.progressDrawable = holder.drawAbleDec
+                holder.progBar.scaleX = -1f
+            }
         }
         /*if (bool != null && progress!=null) {
             if (bool) {
@@ -42,7 +49,7 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
                 holder.progBar.scaleX = -1f
             }
         }*/
-        holder.bind(data[position],clickListener,position)
+
 
     }
 }
