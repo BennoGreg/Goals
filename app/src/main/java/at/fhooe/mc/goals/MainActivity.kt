@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             val i = Intent(this,NewGoal::class.java)
             i.putExtra("newGoal",0)
+           
             startActivityForResult(i, 0)
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 0){
 
             finish()
-            startActivity(intent)
+            startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
 
 
 
