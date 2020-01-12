@@ -164,7 +164,7 @@ class NewGoal : AppCompatActivity() {
         goalPeriodTextView.setTextColor(Color.parseColor(green))
         goalTypeView.setTextColor(Color.parseColor(green))
         achieveTextField.setTextColor(Color.parseColor(green))
-        reminderTexfield.setTextColor(Color.parseColor(green))
+        //reminderTexfield.setTextColor(Color.parseColor(green))
 
     }
 
@@ -180,8 +180,8 @@ class NewGoal : AppCompatActivity() {
         buildButton.setBackgroundColor(Color.parseColor("lightgray"))
         goalTypeView.setTextColor(Color.parseColor(orange))
         achieveTextField.setTextColor(Color.parseColor(orange))
-        reminderTexfield.setTextColor(Color.parseColor(orange))
         goalPeriodTextView.setTextColor(Color.parseColor(orange))
+        //reminderTexfield.setTextColor(Color.parseColor(orange))
 
     }
 
