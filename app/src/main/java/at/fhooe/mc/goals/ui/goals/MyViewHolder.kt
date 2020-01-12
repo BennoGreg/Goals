@@ -1,6 +1,7 @@
 package at.fhooe.mc.goals.ui.goals
 
 import android.graphics.drawable.Drawable
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -16,14 +17,26 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var inProgressTv: TextView = itemView.findViewById(R.id.tv_progressBar)
 
     fun bind(goal: Goal, clickListener: (Goal, Int) -> Boolean, position: Int){
-        itemView.setOnLongClickListener{clickListener(goal,position)}
+
+        itemView.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return false
+            }
+
+        })
         val progress = goal.progress
         val name = goal.name
-        if(name != null && progress != null){
-            inProgressTv.setText(itemView.resources.getString(R.string.goalNameProgress,name,progress))
+        val frequency = goal.goalFrequency
+        val period = goal.goalPeriod
+        val periodString = itemView.resources.getStringArray(R.array.period)
+        if(period != null){
+            inProgressTv.setText(itemView.resources.getString(R.string.goalNameProgress,name,progress,frequency,periodString[period]))
         }
 
+
+
     }
+
 
 
 }

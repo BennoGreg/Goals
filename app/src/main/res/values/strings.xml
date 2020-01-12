@@ -8,7 +8,12 @@
     <string name="action_options">Options</string>
 
     /* Custom strings */
-    <string name="goalNameProgress">%1$s Progress: %2$d/100%%</string>
+    <string name="goalNameProgress">%1$s Progress: %2$d/%3$d %4$s</string>
+    <string name="daily">per day</string>
+    <string name="weekly">per week</string>
+    <string name="monthly">per month</string>
+    <string name="yearly">per year</string>
+
 
     <string name="menu_goals">My Goals</string>
     <string name="menu_statistics">Statistics</string>

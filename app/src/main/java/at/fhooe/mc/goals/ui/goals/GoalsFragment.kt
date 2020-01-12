@@ -17,9 +17,11 @@ import android.view.GestureDetector
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import at.fhooe.mc.goals.MainActivity
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.kotlin.delete
 
 
 class GoalsFragment : Fragment() {
@@ -99,12 +101,27 @@ class GoalsFragment : Fragment() {
             }))*/
 
         recyclerView.adapter = RecyclerAdapter(data) { goal: Goal, position: Int -> goalClicked(goal, position) }
+
+        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = recyclerView.adapter as RecyclerAdapter
+                data.removeAt(viewHolder.adapterPosition)
+                realm.beginTransaction()
+                result.deleteFromRealm(viewHolder.adapterPosition)
+                realm.commitTransaction()
+
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     private fun goalClicked(goal: Goal, position: Int) : Boolean{
 
         realm.beginTransaction()
-        data[position].progress = data[position].progress!! + 5
+        data[position].progress = data[position].progress!! + 1
         realm.commitTransaction()
 
         Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
