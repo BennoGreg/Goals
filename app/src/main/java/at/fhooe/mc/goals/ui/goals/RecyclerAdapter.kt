@@ -24,32 +24,22 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //holder.tv.text = data[position].name
         holder.bind(data[position],clickListener,position)
         val bool = data[position].buildQuit
         val progress = data[position].progress
         progress?.let{
             holder.progBar.setProgress(progress)
+            val name = data[position].name
+
         }
         bool?.let {
             if (!bool){
                 holder.progBar.progressDrawable = holder.drawAbleDec
-                holder.progBar.scaleX = -1f
+            }else{
+                holder.progBar.progressDrawable = holder.drawAble
             }
         }
 
-
-        /*if (bool != null && progress!=null) {
-            if (bool) {
-                holder.progBar.setProgress(progress)
-
-
-            } else {
-                holder.progBar.setProgress(progress)
-                holder.progBar.progressDrawable = holder.drawAbleDec
-                holder.progBar.scaleX = -1f
-            }
-        }*/
 
 
     }

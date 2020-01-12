@@ -13,11 +13,24 @@
         android:text="example"
         android:textSize="20sp"/>-->
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
+    <RelativeLayout
+        android:id="@+id/relativeInItem"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:progressDrawable="@drawable/rounded_corners_progressbar_increase"/>
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:progressDrawable="@drawable/rounded_corners_progressbar_increase" />
+
+        <TextView
+            android:id="@+id/tv_progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:gravity="center" />
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -69,6 +69,7 @@ class GoalsFragment : Fragment() {
 
         val result = realm.where(Goal::class.java).findAll()
 
+
         realm.commitTransaction()
         if (result != null){
             data.addAll(result)
@@ -111,6 +112,8 @@ class GoalsFragment : Fragment() {
         Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
         return true
     }
+
+
 
 /*
     companion object interface ClickListener {

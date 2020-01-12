@@ -14,11 +14,13 @@
         android:left="2dp"
         android:right="2dp">
 
-        <scale android:scaleWidth="100%">
+        <scale android:scaleWidth="100%" android:scaleGravity="right" >
             <shape>
                 <corners android:radius="8dp"/>
-                <solid android:color="@color/red"/>
+                <solid android:color="@color/red" />
             </shape>
         </scale>
     </item>
+
+
 </layer-list>
