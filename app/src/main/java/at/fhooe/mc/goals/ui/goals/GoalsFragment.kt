@@ -17,7 +17,6 @@ import android.view.GestureDetector
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
-import at.fhooe.mc.goals.FragmentRefreshListener
 import at.fhooe.mc.goals.MainActivity
 import io.realm.Realm
 import io.realm.RealmResults
@@ -59,6 +58,8 @@ class GoalsFragment : Fragment() {
         return root
     }
 
+
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val activity = activity
@@ -70,7 +71,7 @@ class GoalsFragment : Fragment() {
 
         realm.commitTransaction()
         if (result != null){
-            data.addAll(realm.copyFromRealm(result))
+            data.addAll(result)
         }
 
 
@@ -100,24 +101,17 @@ class GoalsFragment : Fragment() {
     }
 
     private fun goalClicked(goal: Goal, position: Int) : Boolean{
+
+        realm.beginTransaction()
         data[position].progress = data[position].progress!! + 5
+        realm.commitTransaction()
+
         Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
         recyclerView.adapter?.notifyItemChanged(position)
         Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
         return true
     }
 
-    fun testing(list: RealmResults<Goal>){
-        realm.beginTransaction()
-        list[0]?.buildQuit = false
-        list[0]?.progress = 0
-        list[0]?.name = "Quit drinking"
-        list[1]?.name = "Do more sport"
-        list[1]?.buildQuit = true
-        list[1]?.progress = 0
-
-        realm.commitTransaction()
-    }
 /*
     companion object interface ClickListener {
 

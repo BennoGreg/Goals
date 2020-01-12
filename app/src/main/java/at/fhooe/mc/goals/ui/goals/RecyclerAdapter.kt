@@ -10,8 +10,7 @@ import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
 import android.graphics.PorterDuff
 import android.widget.ProgressBar
-
-
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
 class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, Int) -> Boolean) : RecyclerView.Adapter<MyViewHolder>() {
@@ -29,7 +28,7 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
         holder.bind(data[position],clickListener,position)
         val bool = data[position].buildQuit
         val progress = data[position].progress
-        if(progress!=null){
+        progress?.let{
             holder.progBar.setProgress(progress)
         }
         bool?.let {
@@ -38,6 +37,8 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
                 holder.progBar.scaleX = -1f
             }
         }
+
+
         /*if (bool != null && progress!=null) {
             if (bool) {
                 holder.progBar.setProgress(progress)

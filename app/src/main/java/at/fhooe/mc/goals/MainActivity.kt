@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var realm: Realm
 
-    private var fragmentRefreshListener: FragmentRefreshListener? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
             val i = Intent(this,NewGoal::class.java)
             i.putExtra("newGoal",0)
-           
+
             startActivityForResult(i, 0)
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
@@ -74,9 +74,6 @@ class MainActivity : AppCompatActivity() {
 
             finish()
             startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
-
-
-
         }
     }
 
@@ -95,17 +92,8 @@ class MainActivity : AppCompatActivity() {
         return super.onTouchEvent(event)
     }
 
-    public fun getFragmentRefreshListener(): FragmentRefreshListener? {
-        return fragmentRefreshListener
-    }
 
-    public fun setFragmentRefreshListener( fragmentRefreshListener: FragmentRefreshListener){
-        this.fragmentRefreshListener = fragmentRefreshListener
-    }
 }
 
-public interface FragmentRefreshListener{
-    fun onRefresh()
-}
 
 
