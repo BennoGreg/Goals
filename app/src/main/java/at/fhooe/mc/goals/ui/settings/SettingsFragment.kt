@@ -54,10 +54,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         settingsViewModel =
             ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
-        val textView: TextView = root.findViewById(R.id.text_tools)
-        settingsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
+       
 
 
         return root

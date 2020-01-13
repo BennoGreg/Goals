@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import at.fhooe.mc.goals.R
+import kotlinx.android.synthetic.main.fragment_about.*
 
 class AboutFragment : Fragment() {
 
@@ -24,8 +25,12 @@ class AboutFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_about, container, false)
         val textView: TextView = root.findViewById(R.id.text_share)
         aboutViewModel.text.observe(this, Observer {
-            textView.text = it
+            textView.text = resources.getText(R.string.about_text)
         })
+
+
+
+
         return root
     }
 }

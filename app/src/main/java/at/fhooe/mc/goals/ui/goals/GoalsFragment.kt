@@ -3,27 +3,17 @@ package at.fhooe.mc.goals.ui.goals
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_goals.*
-import android.view.MotionEvent
-import android.view.GestureDetector
-import android.content.Context
-import android.content.DialogInterface
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
-import at.fhooe.mc.goals.MainActivity
 import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.kotlin.delete
-import java.util.concurrent.TimeUnit
 
 
 class GoalsFragment : Fragment() {
@@ -82,7 +72,7 @@ class GoalsFragment : Fragment() {
                 val adapter = recyclerView.adapter as RecyclerAdapter
                 if (direction == ItemTouchHelper.LEFT){
 
-                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage(R.string.askDelete).setPositiveButton(R.string.yes){
+                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage(R.string.askDelete).setPositiveButton(R.string.yes_delete){
                             _, _ ->
                         run {
 
@@ -94,7 +84,7 @@ class GoalsFragment : Fragment() {
 
                             adapter.notifyItemRemoved(viewHolder.adapterPosition)
                         }
-                    }.setNegativeButton(R.string.no){
+                    }.setNegativeButton(R.string.no_delete){
                             _, _ -> adapter.notifyItemChanged(viewHolder.adapterPosition)
                     }.setOnCancelListener { adapter.notifyItemChanged(viewHolder.adapterPosition) }.create()
 
@@ -103,10 +93,9 @@ class GoalsFragment : Fragment() {
 
                 }else if(direction == ItemTouchHelper.RIGHT){
 
-
                     
 
-                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage( R.string.askConfirm).setPositiveButton(R.string.yes){
+                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage(R.string.askConfirm).setPositiveButton(R.string.yesConfirm){
                         _, _ ->
                         run {
                             val position = viewHolder.adapterPosition
@@ -118,7 +107,7 @@ class GoalsFragment : Fragment() {
                             realm.commitTransaction()
                             adapter.notifyItemChanged(position)
                         }
-                    }.setNegativeButton(R.string.no){
+                    }.setNegativeButton(R.string.noConfirm){
                         _, _ -> adapter.notifyItemChanged(viewHolder.adapterPosition)
                     }.setOnCancelListener { adapter.notifyItemChanged(viewHolder.adapterPosition) }.create()
 

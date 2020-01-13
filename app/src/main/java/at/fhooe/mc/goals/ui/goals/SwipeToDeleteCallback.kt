@@ -19,7 +19,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
     private val intrinsicHeightPlus = plusButton?.intrinsicHeight as Int
     private val background = ColorDrawable()
     private val backgroundColor = Color.parseColor("#f44336")
-    private val backgroundSwipeRight = Color.GREEN
+    private val backgroundSwipeRight = ContextCompat.getColor(context,R.color.colorPrimary)
     private val clearPaint = Paint().apply{xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)}
 
     override fun onMove(
@@ -75,7 +75,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
             }
 
             background.color = backgroundSwipeRight
-            background.setBounds(itemView.left, itemView.top,itemView.left + dX.toInt()/3 ,itemView.bottom)
+            background.setBounds(itemView.left, itemView.top,itemView.left + dX.toInt()/4 ,itemView.bottom)
             background.draw(c)
 
 
@@ -88,7 +88,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
             plusButton?.setBounds(iconLeft,iconTop,iconRight,iconBottom)
             plusButton?.draw(c)
 
-            super.onChildDraw(c, recyclerView, viewHolder, dX/3, dY, actionState, isCurrentlyActive)
+            super.onChildDraw(c, recyclerView, viewHolder, dX/4, dY, actionState, isCurrentlyActive)
         }
 
 

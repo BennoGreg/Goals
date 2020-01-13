@@ -1,8 +1,12 @@
 package at.fhooe.mc.goals
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import at.fhooe.mc.goals.Database.Goal
 import io.realm.Realm
@@ -17,16 +21,17 @@ class NewGoal : AppCompatActivity() {
     private lateinit var realm: Realm
     private var build = true
     private var currentPeriod = 0
-    private var orange = "#FF4500"
-    private var green = "#006400"
+    private var orange = "#e88317"
+    private var green = "#4d9446"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_goal)
 
 
-
+        updatePeriodColor(green)
         setThemeGreen()
+
         dailyButton.setBackgroundColor(Color.parseColor(green))
         realm = Realm.getDefaultInstance()
 
@@ -40,14 +45,16 @@ class NewGoal : AppCompatActivity() {
             realm.executeTransactionAsync({
 
                 val goal = it.createObject(Goal::class.java)
-                if (goalNameEditText.text == null){
+                if (goalNameEditText.text.toString().isEmpty()){
                     goal.name = "My Goal"
                 }else {
                     goal.name = goalNameEditText.text.toString()
                 }
                 goal.buildQuit = build
                 goal.goalPeriod = currentPeriod
-                goal.goalFrequency = Integer.parseInt(frequencyEditText.text.toString())
+
+                if (frequencyEditText.text.toString().isEmpty()) goal.goalFrequency = 1
+                else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
                 goal.progress = 0
 
             },{
@@ -58,6 +65,13 @@ class NewGoal : AppCompatActivity() {
 
             finish()
         }
+
+        content_new_goal.setOnTouchListener { v, event ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken,0)
+            false
+        }
+
 
 
         buildButton.setOnClickListener {
@@ -155,6 +169,7 @@ class NewGoal : AppCompatActivity() {
      */
     fun setThemeGreen(){
 
+        toolbar_layout.setContentScrimColor(Color.parseColor(green))
         toolbar.setBackgroundColor(Color.parseColor(green))
         app_bar.setBackgroundColor(Color.parseColor(green))
         toolbar_layout.setBackgroundColor(Color.parseColor(green))
@@ -172,6 +187,7 @@ class NewGoal : AppCompatActivity() {
      * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
      */
     fun setThemeOrange(){
+        toolbar_layout.setContentScrimColor(Color.parseColor(orange))
         toolbar.setBackgroundColor(Color.parseColor(orange))
         app_bar.setBackgroundColor(Color.parseColor(orange))
         toolbar_layout.setBackgroundColor(Color.parseColor(orange))

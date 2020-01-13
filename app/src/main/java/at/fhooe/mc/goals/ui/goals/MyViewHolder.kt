@@ -18,6 +18,8 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
     fun bind(goal: Goal, clickListener: (Goal, Int) -> Boolean, position: Int){
 
+
+
         itemView.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
                 return false

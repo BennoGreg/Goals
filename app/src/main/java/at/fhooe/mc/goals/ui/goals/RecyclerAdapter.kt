@@ -28,6 +28,7 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
         val bool = data[position].buildQuit
         val progress = data[position].progress
         val frequency = data[position].goalFrequency
+
         if(progress!=null && frequency!=null){
             //val progInPercentage = (progress.toDouble()/frequency.toDouble()) * 100
             holder.progBar.max = frequency

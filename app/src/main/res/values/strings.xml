@@ -8,19 +8,29 @@
     <string name="action_options">Options</string>
 
     /* Custom strings */
-    <string name="goalNameProgress">%1$s Progress: %2$d/%3$d %4$s</string>
+    <string name="goalNameProgress">%1$s \ \ \ \ -\ \ \ \  %2$d/%3$d %4$s</string>
     <string name="daily">per day</string>
     <string name="weekly">per week</string>
     <string name="monthly">per month</string>
     <string name="yearly">per year</string>
-    <string name="askConfirm">Have you really achieved this goal?</string>
+    <string name="askConfirm">Did you really achieve this goal?</string>
     <string name="askDelete">Do you really want to delete the goal?</string>
-    <string name="no">Not Yet</string>
-    <string name="yes">Yes, I did!</string>
+    <string name="noConfirm">Not Yet</string>
+    <string name="yesConfirm">Yes, I did!</string>
+    <string name="no_delete">Cancel</string>
+    <string name="yes_delete">confirm</string>
     <string name="goalAchieved">You have already completed the goal!</string>
     <string name="delete_data_text">Do your really want to delete the entire data?\nThis can not be undone.!</string>
     <string name="confirm_delete_data">Confirm</string>
     <string name="cancel_delete_data">Cancel</string>
+    <string name="about_text">\n\n
+        \"Goals\" was developed by\nBenedikt Langer and Niklas Wagner\n
+        as a project for their academic studies Mobile Comping at the\n
+        University of Applied Sciences Upper Austria (Hagenberg).\n\n
+        Version 1.0, January 13th 2020.
+    </string>
+    <string name="goal_completed_color">%1$s</string>
+
 
 
 

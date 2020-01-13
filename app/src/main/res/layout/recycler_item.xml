@@ -29,7 +29,8 @@
             android:id="@+id/tv_progressBar"
             android:layout_width="match_parent"
             android:layout_height="57dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textStyle="bold"/>
     </RelativeLayout>
 
 
