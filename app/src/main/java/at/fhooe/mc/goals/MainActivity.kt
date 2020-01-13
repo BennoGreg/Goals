@@ -1,5 +1,8 @@
 package at.fhooe.mc.goals
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,8 +25,7 @@ import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import at.fhooe.mc.goals.ui.goals.GoalsFragment
-
-
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +68,31 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        setAlarm()
+    }
+
+    fun setAlarm(){
+
+        val alarmUp = PendingIntent.getBroadcast(this,0,Intent(this,UpdateDataBase::class.java),PendingIntent.FLAG_NO_CREATE) != null
+
+
+        if (!alarmUp){
+            val intent = Intent(this, UpdateDataBase::class.java)
+            intent.putExtra("activate",true)
+            val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT)
+
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.set(Calendar.HOUR_OF_DAY,0)
+            calendar.set(Calendar.MINUTE,0)
+            calendar.set(Calendar.SECOND,0)
+
+            val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            am.setExact(AlarmManager.RTC,calendar.timeInMillis,pendingIntent)
+
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
