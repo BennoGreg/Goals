@@ -18,6 +18,10 @@
     <string name="no">Not Yet</string>
     <string name="yes">Yes, I did!</string>
     <string name="goalAchieved">You have already completed the goal!</string>
+    <string name="delete_data_text">Do your really want to delete the entire data?\nThis can not be undone.!</string>
+    <string name="confirm_delete_data">Confirm</string>
+    <string name="cancel_delete_data">Cancel</string>
+
 
 
     <string name="menu_goals">My Goals</string>
