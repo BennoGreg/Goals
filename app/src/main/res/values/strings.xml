@@ -13,6 +13,10 @@
     <string name="weekly">per week</string>
     <string name="monthly">per month</string>
     <string name="yearly">per year</string>
+    <string name="askConfirm">Have you really achieved this goal?</string>
+    <string name="askDelete">Do you really want to delete the goal?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 
 
     <string name="menu_goals">My Goals</string>
