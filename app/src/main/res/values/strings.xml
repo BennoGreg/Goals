@@ -15,8 +15,9 @@
     <string name="yearly">per year</string>
     <string name="askConfirm">Have you really achieved this goal?</string>
     <string name="askDelete">Do you really want to delete the goal?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
+    <string name="no">Not Yet</string>
+    <string name="yes">Yes, I did!</string>
+    <string name="goalAchieved">You have already completed the goal!</string>
 
 
     <string name="menu_goals">My Goals</string>

@@ -104,8 +104,9 @@ class GoalsFragment : Fragment() {
                 }else if(direction == ItemTouchHelper.RIGHT){
 
 
+                    
 
-                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage(R.string.askConfirm).setPositiveButton(R.string.yes){
+                    val dialog = AlertDialog.Builder(this@GoalsFragment.context).setMessage( R.string.askConfirm).setPositiveButton(R.string.yes){
                         _, _ ->
                         run {
                             val position = viewHolder.adapterPosition
