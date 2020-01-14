@@ -66,7 +66,7 @@ class UpdateDataBase : BroadcastReceiver(){
             0 -> goal.progress = 0
 
             1 -> {
-                if (weekDay == 1) goal.progress = 0
+                if (weekDay == Calendar.MONDAY) goal.progress = 0
             }
             2 -> {
                 if (monthDay == 1) goal.progress = 0
