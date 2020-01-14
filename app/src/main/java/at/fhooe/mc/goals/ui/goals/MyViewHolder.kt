@@ -15,6 +15,8 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     var drawAble: Drawable =  itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_increase,null)
     var drawAbleDec: Drawable =  itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_decrease,null)
     var inProgressTv: TextView = itemView.findViewById(R.id.tv_progressBar)
+    var drawableIncFull: Drawable = itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_inc_full,null)
+    var drawableDecFull: Drawable = itemView.resources.getDrawable(R.drawable.rounded_corners_progressbar_dec_full,null)
 
     fun bind(goal: Goal, clickListener: (Goal, Int) -> Boolean, position: Int){
 

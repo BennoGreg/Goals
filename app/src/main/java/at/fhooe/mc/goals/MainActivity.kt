@@ -18,13 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MotionEvent
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import io.realm.Realm
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import at.fhooe.mc.goals.ui.goals.GoalsFragment
+import at.fhooe.mc.goals.Database.Goal
 import java.util.*
 
 
@@ -69,28 +64,60 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        setAlarm()
+        val pref = getSharedPreferences("lastLoginTime",Context.MODE_PRIVATE)
+
+        val lastTime = pref.getLong("lastLoginTime",System.currentTimeMillis())
+
+        val actual = System.currentTimeMillis()
+        val lastCalendar = Calendar.getInstance()
+        lastCalendar.timeInMillis = lastTime
+
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.timeInMillis = actual
+
+        if (lastCalendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR)){
+            realm.beginTransaction()
+            val result = realm.where(Goal::class.java).findAll()
+            for(goal in result){
+                updateGoal(goal, currentCalendar)
+            }
+            realm.commitTransaction()
+        }
+
+        val edt = pref.edit()
+
+
+        edt.putLong("lastLoginTime",actual)
+        currentCalendar.timeInMillis = actual
+
+        edt.commit()
+
+
+
+
     }
 
-    fun setAlarm(){
+    private fun updateGoal(goal: Goal, current: Calendar){
 
-        val alarmUp = PendingIntent.getBroadcast(this,0,Intent(this,UpdateDataBase::class.java),PendingIntent.FLAG_NO_CREATE) != null
+        val period = goal.goalPeriod as Int
 
+        val weekDay = current.get(Calendar.DAY_OF_WEEK)
 
-        if (!alarmUp){
-            val intent = Intent(this, UpdateDataBase::class.java)
-            intent.putExtra("activate",true)
-            val pendingIntent = PendingIntent.getBroadcast(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT)
+        val monthDay = current.get(Calendar.DAY_OF_MONTH)
 
-            val calendar = Calendar.getInstance()
-            calendar.timeInMillis = System.currentTimeMillis()
-            calendar.set(Calendar.HOUR_OF_DAY,0)
-            calendar.set(Calendar.MINUTE,0)
-            calendar.set(Calendar.SECOND,0)
+        val yearDay = current.get(Calendar.DAY_OF_YEAR)
 
-            val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            am.setExact(AlarmManager.RTC,calendar.timeInMillis,pendingIntent)
+        when(period){
 
+            0 -> goal.progress = 0
+
+            1 -> {
+                if (weekDay == Calendar.MONDAY) goal.progress = 0
+            }
+            2 -> {
+                if (monthDay == 1) goal.progress = 0
+            }
+            3 -> if (yearDay == 1) goal.progress = 0
         }
 
     }

@@ -16,6 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import io.realm.Realm
 
 
+
+
 class GoalsFragment : Fragment() {
 
     private lateinit var goalsViewModel: GoalsViewModel
@@ -55,7 +57,7 @@ class GoalsFragment : Fragment() {
 
         realm.commitTransaction()
         if (result != null){
-            data.addAll(result)
+            data.addAll(realm.copyFromRealm(result))
         }
 
 
@@ -93,12 +95,24 @@ class GoalsFragment : Fragment() {
                         _, _ ->
                         run {
                             val position = viewHolder.adapterPosition
-                            realm.beginTransaction()
+                            //realm.beginTransaction()
                             val currentProg = data[position].progress
                             if (currentProg != null && currentProg != data[position].goalFrequency) {
                                 data[position].progress = currentProg + 1
+                                realm.executeTransactionAsync({ realm ->
+                                    val res = realm.where(Goal::class.java).findAll()
+                                    res[position]?.progress = data[position].progress
+                                }, {
+                                    Log.i("My","Saving was successful")
+                                }, {
+                                    Log.e("My","Saving was not successful")
+                                })
+
+
                             }
-                            realm.commitTransaction()
+
+                            //result[position]?.progress = data[position].progress
+                            //realm.commitTransaction()
                             adapter.notifyItemChanged(position)
                         }
                     }.setNegativeButton(R.string.noConfirm){

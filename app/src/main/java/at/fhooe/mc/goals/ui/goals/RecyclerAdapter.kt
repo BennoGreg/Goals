@@ -37,15 +37,18 @@ class RecyclerAdapter(private val data: List<Goal>, val clickListener: (Goal, In
         }
         bool?.let {
             if (!bool){
-                /*if (progress == data[position].goalFrequency){
-                    holder.drawAbleDec.setTint(Color.parseColor("#d4af37"))
-                }*/
-                holder.progBar.progressDrawable = holder.drawAbleDec
+                if (progress == data[position].goalFrequency){
+                    holder.progBar.progressDrawable = holder.drawableDecFull
+                }else {
+                    holder.progBar.progressDrawable = holder.drawAbleDec
+                }
             }else{
-                /*if (progress == data[position].goalFrequency){
-                    holder.drawAble.setTint(Color.parseColor("#d4af37"))
-                }*/
-                holder.progBar.progressDrawable = holder.drawAble
+                if (progress == data[position].goalFrequency){
+                    holder.progBar.progressDrawable = holder.drawableIncFull
+                }else {
+                    holder.progBar.progressDrawable = holder.drawAble
+                }
+
             }
         }
 
