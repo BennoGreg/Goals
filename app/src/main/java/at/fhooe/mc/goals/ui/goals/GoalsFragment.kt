@@ -54,6 +54,7 @@ class GoalsFragment : Fragment() {
 
         val result = realm.where(Goal::class.java).findAll()
 
+        data.clear()
 
         realm.commitTransaction()
         if (result != null){

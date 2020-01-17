@@ -6,7 +6,7 @@
     <color name="white">#FFFFFF</color>
     <color name="orange">#e88317</color>
     <color name="green">#4d9446</color>
-
+    <color name="light_grey">#e3eaeb</color>
 
     //Own colors
 </resources>
