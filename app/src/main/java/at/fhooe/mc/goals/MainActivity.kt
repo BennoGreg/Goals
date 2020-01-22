@@ -20,6 +20,7 @@ import android.view.Menu
 import android.view.MotionEvent
 import io.realm.Realm
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.Database.StatisticData
 import java.util.*
 
 
@@ -63,6 +64,14 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        realm.beginTransaction()
+        var result = realm.where(StatisticData::class.java).findFirst()
+        if(result!=null){
+            val stat = StatisticData()
+            val managedstat = realm.copyFromRealm(stat)
+        }
+        realm.commitTransaction()
 
         val pref = getSharedPreferences("lastLoginTime",Context.MODE_PRIVATE)
 
