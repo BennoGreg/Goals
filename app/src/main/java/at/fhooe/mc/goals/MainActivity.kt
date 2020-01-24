@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         realm.beginTransaction()
-        var result = realm.where(StatisticData::class.java).findFirst()
+        val result = realm.where(StatisticData::class.java).findFirst()
         if(result!=null){
             val stat = StatisticData()
-            val managedstat = realm.copyFromRealm(stat)
+            val managedstat = realm.copyToRealm(stat)
         }
         realm.commitTransaction()
 

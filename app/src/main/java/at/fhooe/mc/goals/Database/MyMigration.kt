@@ -17,8 +17,8 @@ class MyMigration : RealmMigration{
 
         if (oldVersion == 2L){
             schema.create("StatisticData").addField("sID",Int::class.java,FieldAttribute.PRIMARY_KEY)
-                .addField("nrOfArchievedDayly",Int::class.java)
-                .addField("nrOfTotalDayly",Int::class.java)
+                .addField("nrOfArchievedDaily",Int::class.java)
+                .addField("nrOfTotalDaily",Int::class.java)
                 .addField("nrOfArchievedWeekly",Int::class.java)
                 .addField("nrOfTotalWeekly",Int::class.java)
                 .addField("nrOfArchievedMonthly",Int::class.java)
@@ -28,6 +28,11 @@ class MyMigration : RealmMigration{
                 .addField("nrOfTotal", Int::class.java)
 
             oldVersion.inc()
+        }
+
+        if (oldVersion == 3L){
+            schema.get("StatisticData")?.renameField("nrOfArchievedDayly","nrOfArchievedDaily")
+                ?.renameField("nrOfTotalDayly","nrOfTotalDaily")
         }
 
     }

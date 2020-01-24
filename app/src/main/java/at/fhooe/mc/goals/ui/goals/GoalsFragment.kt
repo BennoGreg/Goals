@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_goals.*
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
+import at.fhooe.mc.goals.Database.StatisticData
 import io.realm.Realm
 
 
@@ -112,6 +113,11 @@ class GoalsFragment : Fragment() {
 
                             }
 
+                            if (data[position].progress == data[position].goalFrequency){
+
+
+                            }
+
                             //result[position]?.progress = data[position].progress
                             //realm.commitTransaction()
                             adapter.notifyItemChanged(position)
@@ -141,6 +147,21 @@ class GoalsFragment : Fragment() {
         recyclerView.adapter?.notifyItemChanged(position)
         Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
         return true
+    }
+
+    private fun updateStatistic(goal: Goal){
+
+        realm.beginTransaction()
+
+        var statistic = StatisticData(sID = 0)
+
+
+        when(goal.goalPeriod){
+
+            
+        }
+
+        realm.commitTransaction()
     }
 
 }

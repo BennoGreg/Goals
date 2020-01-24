@@ -30,6 +30,7 @@
         Version 1.0, January 16th 2020.
     </string>
     <string name="goal_completed_color">%1$s</string>
+    <string name="statisticProgressInText">Reached \ \ \ \ -\ \ \ \  %1$d/%2$d this %3$s</string>
 
 
 
