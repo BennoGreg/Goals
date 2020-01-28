@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".NewGoal"
+    tools:context=".ui.newGoal.NewGoal"
     tools:showIn="@layout/activity_new_goal">
 
 
@@ -191,19 +191,21 @@
             app:layout_constraintTop_toBottomOf="@+id/goalNameTextView" />
 
 
-        <!--
+
 
     <TextView
-        android:id="@+id/reminderTexfield"
+        android:id="@+id/reminderTextfield"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="128dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/reminder_texfield"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frequencyEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/frequencyEditText"
+        />
 
     <Button
         android:id="@+id/addReminderButton"
@@ -216,12 +218,25 @@
         android:textAlignment="center"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/reminderTexfield"
+        app:layout_constraintStart_toEndOf="@+id/reminderTextfield"
         app:layout_constraintTop_toBottomOf="@+id/frequencyEditText" />
 
-      -->
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/reminder_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/reminderTextfield" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.core.widget.NestedScrollView>

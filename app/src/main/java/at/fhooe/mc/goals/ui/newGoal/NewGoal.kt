@@ -1,19 +1,21 @@
-package at.fhooe.mc.goals
+package at.fhooe.mc.goals.ui.newGoal
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
-import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.R
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
-
-
+import kotlinx.android.synthetic.main.fragment_goals.*
 
 
 class NewGoal : AppCompatActivity() {
@@ -23,12 +25,20 @@ class NewGoal : AppCompatActivity() {
     private var currentPeriod = 0
     private var orange = "#e88317"
     private var green = "#4d9446"
+    private var reminders = ArrayList<Reminder>()
+    //private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var reminderAdapter: ReminderRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_new_goal)
 
-
+        initReminderRecyclerView() // set up reminder recycler view
+        addReminderDataSet() // add reminder dummy data
+       /* linearLayoutManager = LinearLayoutManager(this)
+        reminder_recycler.layoutManager = linearLayoutManager
+*/
         updatePeriodColor(green)
         setThemeGreen()
 
@@ -116,8 +126,52 @@ class NewGoal : AppCompatActivity() {
             if (build) updatePeriodColor(green) else updatePeriodColor(orange)
         }
 
+        addReminderButton.setOnClickListener {
 
 
+            val i = Intent(this, NewReminder::class.java)
+            startActivityForResult(i,1)
+
+        }
+
+
+
+    }
+
+    @Override
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+
+            Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
+
+
+        }
+    }
+
+
+
+    /**
+     * Sets up the recyclerView for the Reminders
+     */
+    private fun initReminderRecyclerView(){
+
+
+        reminder_recycler.apply {
+           layoutManager = LinearLayoutManager(this@NewGoal)
+            reminderAdapter = ReminderRecyclerAdapter()
+            reminder_recycler.adapter = reminderAdapter
+        }
+    }
+
+    /**
+     * Adds the dummy reminders to the data set
+     */
+    private fun addReminderDataSet(){
+        val reminderData = dummyData.createDummyData()
+        reminderAdapter.submitList(reminderData)
     }
 
 
@@ -164,6 +218,8 @@ class NewGoal : AppCompatActivity() {
 
 
 
+
+
     /**
      * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
      */
@@ -179,7 +235,7 @@ class NewGoal : AppCompatActivity() {
         goalPeriodTextView.setTextColor(Color.parseColor(green))
         goalTypeView.setTextColor(Color.parseColor(green))
         achieveTextField.setTextColor(Color.parseColor(green))
-        //reminderTexfield.setTextColor(Color.parseColor(green))
+        reminderTextfield.setTextColor(Color.parseColor(green))
 
     }
 
@@ -197,7 +253,7 @@ class NewGoal : AppCompatActivity() {
         goalTypeView.setTextColor(Color.parseColor(orange))
         achieveTextField.setTextColor(Color.parseColor(orange))
         goalPeriodTextView.setTextColor(Color.parseColor(orange))
-        //reminderTexfield.setTextColor(Color.parseColor(orange))
+        reminderTextfield.setTextColor(Color.parseColor(orange))
 
     }
 
@@ -205,3 +261,4 @@ class NewGoal : AppCompatActivity() {
 
 
 }
+

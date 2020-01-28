@@ -19,6 +19,7 @@ import android.view.MotionEvent
 import io.realm.Realm
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.Database.StatisticData
+import at.fhooe.mc.goals.ui.newGoal.NewGoal
 import java.util.*
 
 
@@ -45,7 +46,7 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 
-            val i = Intent(this,NewGoal::class.java)
+            val i = Intent(this, NewGoal::class.java)
             i.putExtra("newGoal",0)
 
             startActivityForResult(i, 0)

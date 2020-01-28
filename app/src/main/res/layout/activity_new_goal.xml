@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".NewGoal"
+    tools:context=".ui.newGoal.NewGoal"
     app:title="New Goal">
 
     <com.google.android.material.appbar.AppBarLayout

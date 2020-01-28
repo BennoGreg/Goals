@@ -3,17 +3,18 @@
     package="at.fhooe.mc.goals">
 
     <application
+        android:name=".RealmApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".RealmApplication">
+        android:theme="@style/AppTheme">
+        <activity android:name=".ui.newGoal.NewReminder"></activity>
         <activity
-            android:name=".NewGoal"
+            android:name=".ui.newGoal.NewGoal"
             android:label="@string/title_activity_new_goal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -24,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
