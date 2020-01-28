@@ -1,7 +1,5 @@
 package at.fhooe.mc.goals
 
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -28,7 +26,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var realm: Realm
+    public lateinit var fab: FloatingActionButton
 
+    /*private var `StatisticsSingleton.stats StatisticData? = null*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-
-        val fab: FloatingActionButton = findViewById(R.id.saveButton)
+        fab = findViewById(R.id.saveButton)
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
@@ -66,10 +65,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         realm.beginTransaction()
-        var result = realm.where(StatisticData::class.java).findFirst()
-        if(result!=null){
+        StatisticsSingleton.stats = realm.where(StatisticData::class.java).findFirst()
+        if(StatisticsSingleton.stats==null){
             val stat = StatisticData()
-            val managedstat = realm.copyFromRealm(stat)
+            StatisticsSingleton.stats = realm.copyToRealm(stat)
         }
         realm.commitTransaction()
 
@@ -106,6 +105,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
     private fun updateGoal(goal: Goal, current: Calendar){
 
         val period = goal.goalPeriod as Int
@@ -115,18 +115,33 @@ class MainActivity : AppCompatActivity() {
         val monthDay = current.get(Calendar.DAY_OF_MONTH)
 
         val yearDay = current.get(Calendar.DAY_OF_YEAR)
-
         when(period){
 
-            0 -> goal.progress = 0
+            0 -> {
+                goal.progress = 0
+                StatisticsSingleton.resetAchieved(period)
+                StatisticsSingleton.updateTotal()
+            }
 
             1 -> {
-                if (weekDay == Calendar.MONDAY) goal.progress = 0
+                if (weekDay == Calendar.MONDAY) {
+                    goal.progress = 0
+                    StatisticsSingleton.resetAchieved(period)
+                    StatisticsSingleton.updateTotal()
+                }
             }
             2 -> {
-                if (monthDay == 1) goal.progress = 0
+                if (monthDay == 1) {
+                    goal.progress = 0
+                    StatisticsSingleton.resetAchieved(period)
+                    StatisticsSingleton.updateTotal()
+                }
             }
-            3 -> if (yearDay == 1) goal.progress = 0
+            3 -> if (yearDay == 1) {
+                goal.progress = 0
+                StatisticsSingleton.resetAchieved(period)
+                StatisticsSingleton.updateTotal()
+            }
         }
 
     }
@@ -154,6 +169,38 @@ class MainActivity : AppCompatActivity() {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return super.onTouchEvent(event)
     }
+
+
+
+
+    /*fun updateStatistic(goal: Goal){
+
+        realm.beginTransaction()
+
+        when(goal.goalPeriod){
+
+            0 -> {
+                `StatisticsSingleton.stats`!!.nrOfTotalDaily += 1
+                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedDaily += 1
+            }
+            1->{
+                `StatisticsSingleton.stats`!!.nrOfTotalWeekly += 1
+                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedWeekly += 1
+            }
+            2->{
+                `StatisticsSingleton.stats`!!.nrOfTotalMonthly += 1
+                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedMonthly += 1
+            }
+            3->{
+                `StatisticsSingleton.stats`!!.nrOfTotalYearly += 1
+                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedYearly += 1
+            }
+        }
+        realm.commitTransaction()
+
+    }*/
+
+
 
 
 }
