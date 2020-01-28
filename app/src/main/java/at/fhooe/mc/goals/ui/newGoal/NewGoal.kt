@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
+import at.fhooe.mc.goals.StatisticsSingleton
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
@@ -67,11 +68,17 @@ class NewGoal : AppCompatActivity() {
                 else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
                 goal.progress = 0
 
+
+
             },{
                 Log.d("Goal", "Saved successfully")
             },{
                 Log.d("Goal", "Not saved")
             })
+
+            realm.beginTransaction()
+            StatisticsSingleton.updateNrOfGoals(currentPeriod,1)
+            realm.commitTransaction()
 
             finish()
         }
