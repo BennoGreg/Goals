@@ -13,6 +13,10 @@ import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_settings.*
 import io.realm.Realm
 import android.app.AlertDialog
+import at.fhooe.mc.goals.Database.StatisticData
+import at.fhooe.mc.goals.MainActivity
+import at.fhooe.mc.goals.StatisticsSingleton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class SettingsFragment : Fragment(), View.OnClickListener {
@@ -28,6 +32,8 @@ class SettingsFragment : Fragment(), View.OnClickListener {
                 realm.beginTransaction()
 
                 realm.deleteAll()
+
+                StatisticsSingleton.stats = StatisticData()
 
                 realm.commitTransaction()
             }
@@ -54,8 +60,10 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         settingsViewModel =
             ViewModelProviders.of(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
-       
 
+
+        val main = activity as MainActivity
+        main.fab.hide()
 
         return root
     }

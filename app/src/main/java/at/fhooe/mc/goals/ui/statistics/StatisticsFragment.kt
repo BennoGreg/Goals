@@ -8,10 +8,10 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import at.fhooe.mc.goals.Database.StatisticData
+import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.R
+import at.fhooe.mc.goals.StatisticsSingleton
 import io.realm.Realm
-import io.realm.kotlin.where
 import kotlinx.android.synthetic.main.fragment_statistics.*
 
 class StatisticsFragment : Fragment() {
@@ -33,6 +33,9 @@ class StatisticsFragment : Fragment() {
             textView.text = it
         })*/
 
+        val activity = activity as MainActivity
+        activity.fab.show()
+
         realm = Realm.getDefaultInstance()
 
 
@@ -42,35 +45,39 @@ class StatisticsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        realm.beginTransaction()
+        //realm.beginTransaction()
 
-        val result = realm.where<StatisticData>().findFirst()
+        val mainActivity = activity as MainActivity
+        val result = StatisticsSingleton.stats
+
+
 
 
         if (result != null){
 
             //Progressdaily
-            setProgressBar(progressBarDaily,tv_dailyGoals,result.nrOfArchievedDaily,result.nrOfTotalDaily,"Day")
+            setProgressBar(progressBarDaily,tv_dailyGoals,result.nrOfAchievedDaily,result.nrOfTotalDaily,"this Day")
 
             //Progressweekly
-            setProgressBar(progressBarWeekly,tv_weeklyGoals,result.nrOfArchievedWeekly,result.nrOfTotalWeekly,"Week")
+            setProgressBar(progressBarWeekly,tv_weeklyGoals,result.nrOfAchievedWeekly,result.nrOfTotalWeekly,"this Week")
 
             //Progressmonthly
-            setProgressBar(progressBarMonthly,tv_monthlyGoals,result.nrOfArchievedMonthly,result.nrOfTotalMonthly,"Month")
+            setProgressBar(progressBarMonthly,tv_monthlyGoals,result.nrOfAchievedMonthly,result.nrOfTotalMonthly,"this Month")
 
             //Progressyearly
-            setProgressBar(progressBarYearly,tv_yearlyGoals,result.nrOfArchievedYearly,result.nrOfTotalYearly,"Year")
+            setProgressBar(progressBarYearly,tv_yearlyGoals,result.nrOfAchievedYearly,result.nrOfTotalYearly,"this Year")
 
             //Progresstotal
-            setProgressBar(progressBarTotal,tv_totalGoals,result.nrOfTotalYearly,result.nrOfTotal,"Year")
+            setProgressBar(progressBarTotal,tv_totalGoals,result.nrOfTotalAchieved,result.nrOfTotal,"in Total")
 
         }
 
-        realm.commitTransaction()
+        //realm.commitTransaction()
     }
 
     fun setProgressBar(progressBar: ProgressBar, textView: TextView, progress: Int, quantity: Int, period: String){
 
+        progressBar.max = quantity
         progressBar.progress = progress
         textView.text =
             this.resources.getString(R.string.statisticProgressInText,progress,quantity,period)

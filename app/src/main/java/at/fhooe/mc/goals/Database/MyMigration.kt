@@ -31,8 +31,17 @@ class MyMigration : RealmMigration{
         }
 
         if (oldVersion == 3L){
-            schema.get("StatisticData")?.renameField("nrOfArchievedDayly","nrOfArchievedDaily")
+            schema.get("StatisticData")?.renameField("nrOfArchievedDayly","nrOfAchievedDaily")
                 ?.renameField("nrOfTotalDayly","nrOfTotalDaily")
+        }
+
+        if (oldVersion == 4L){
+            schema.get("StatisticData")?.addField("nrOfTotalAchieved",Int::class.java)
+                ?.renameField("nrOfArchievedDaily","nrOfAchievedDaily")
+                ?.renameField("nrOfArchievedWeekly","nrOfAchievedWeekly")
+                ?.renameField("nrOfArchievedMonthly","nrOfAchievedMonthly")
+                ?.renameField("nrOfArchievedYearly","nrOfAchievedYearly")
+
         }
 
     }

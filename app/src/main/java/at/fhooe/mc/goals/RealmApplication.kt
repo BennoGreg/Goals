@@ -10,7 +10,7 @@ class RealmApplication :Application() {
     override fun onCreate() {
         super.onCreate()
         Realm.init(this)
-        val config = RealmConfiguration.Builder().schemaVersion(4).migration(MyMigration()).build()
+        val config = RealmConfiguration.Builder().schemaVersion(5).migration(MyMigration()).build()
         Realm.setDefaultConfiguration(config)
 
 
