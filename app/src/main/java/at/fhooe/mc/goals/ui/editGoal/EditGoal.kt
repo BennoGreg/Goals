@@ -10,6 +10,7 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
+import at.fhooe.mc.goals.StatisticsSingleton
 
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_edit_goal.*
@@ -34,10 +35,13 @@ class EditGoal : AppCompatActivity() {
         setContentView(R.layout.activity_edit_goal)
         setSupportActionBar(toolbar)
 
+        val position = intent.getIntExtra("position",0)
 
-        val goal = intent.getSerializableExtra("Goal") as Goal
+        val goal = GoalSingleton.getGoal(position)
+
 
         currentPeriod = goal.goalPeriod!!
+        val oldPeriod = currentPeriod
 
         updatePeriodColor(green)
         setThemeGreen()
@@ -46,6 +50,8 @@ class EditGoal : AppCompatActivity() {
         realm = Realm.getDefaultInstance()
 
         goalNameEditText.setText(goal.name)
+
+        val oldFrequency = goal.goalFrequency
 
         if (goal.buildQuit == false){
             setThemeOrange()
@@ -63,7 +69,7 @@ class EditGoal : AppCompatActivity() {
 
 
         fab.setOnClickListener {
-            realm.executeTransactionAsync({
+            /*realm.executeTransactionAsync({
 
                 if (goalNameEditText.text.toString().isEmpty()){
                     goal.name = "My Goal"
@@ -83,7 +89,26 @@ class EditGoal : AppCompatActivity() {
                 Log.d("Goal", "Saved successfully")
             },{
                 Log.d("Goal", "Not saved")
-            })
+            })*/
+
+            realm.beginTransaction()
+            if (goalNameEditText.text.toString().isEmpty()){
+                goal.name = "My Goal"
+            }else {
+                goal.name = goalNameEditText.text.toString()
+            }
+            goal.buildQuit = build
+            goal.goalPeriod = currentPeriod
+
+            if (frequencyEditText.text.toString().isEmpty()) goal.goalFrequency = 1
+            else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
+
+            val isAchieved = goal.progress == oldFrequency
+            val isEqualFrequency = goal.goalFrequency == oldFrequency
+
+            StatisticsSingleton.updateAfterEdit(oldPeriod,currentPeriod,isAchieved,isEqualFrequency)
+
+            realm.commitTransaction()
 
             finish()
         }
@@ -142,7 +167,7 @@ class EditGoal : AppCompatActivity() {
 
 
     /**
-     * Function to update the current Color of the goal period buttons.
+     * Function to update the current Color of the goalList period buttons.
      */
     fun updatePeriodColor(color: String){
 

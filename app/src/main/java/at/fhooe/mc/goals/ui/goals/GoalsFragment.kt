@@ -12,12 +12,12 @@ import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_goals.*
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.StatisticsSingleton
 import at.fhooe.mc.goals.ui.editGoal.EditGoal
+import at.fhooe.mc.goals.ui.editGoal.GoalSingleton
 import io.realm.Realm
 
 
@@ -62,8 +62,10 @@ class GoalsFragment : Fragment() {
 
         val result = realm.where(Goal::class.java).findAll()
 
-        /*for(goal in result){
-            StatisticsSingleton.updateNrOfGoals(goal.goalPeriod!!,1)
+        GoalSingleton.goalList = result
+
+        /*for(goalList in result){
+            StatisticsSingleton.updateNrOfGoals(goalList.goalPeriod!!,1)
         }*/
 
         /*statistics = realm.where(StatisticData::class.java).findFirst()
@@ -77,8 +79,8 @@ class GoalsFragment : Fragment() {
 
 
         /*if (statistics != null){
-            for (goal in result){
-                activity.updateStatistic(goal)
+            for (goalList in result){
+                activity.updateStatistic(goalList)
             }
         }*/
 
@@ -197,10 +199,13 @@ class GoalsFragment : Fragment() {
 
         Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
         recyclerView.adapter?.notifyItemChanged(position)
-        Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()*/
+        Toast.makeText(activity,"Clicked: ${goalList.name} at position $position", Toast.LENGTH_SHORT).show()*/
+        realm.beginTransaction()
+        val result = realm.where(Goal::class.java).findAll()
 
+        realm.commitTransaction()
         val intent = Intent(context, EditGoal::class.java)
-        intent.putExtra("Goal",goal)
+        intent.putExtra("position", position)
 
         startActivityForResult(intent,1)
 

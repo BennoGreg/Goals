@@ -62,4 +62,49 @@ object StatisticsSingleton {
             temp.nrOfTotal +=1
         }
     }
+
+    fun updateAfterEdit(oldPeriod: Int, newPeriod: Int, isAchieved: Boolean, isEqualFrequency: Boolean){
+
+        val temp = stats
+        if(temp != null){
+            when(oldPeriod){
+                0-> {
+                    if (isAchieved) temp.nrOfAchievedDaily -= 1
+                    temp.nrOfTotalDaily -= 1
+                }
+                1->{
+                    if (isAchieved) temp.nrOfAchievedWeekly -= 1
+                    temp.nrOfTotalWeekly -= 1
+                }
+                2->{
+                    if(isAchieved) temp.nrOfAchievedMonthly -= 1
+                    temp.nrOfTotalMonthly -= 1
+                }
+                3->{
+                    if(isAchieved) temp.nrOfAchievedYearly -= 1
+                    temp.nrOfTotalYearly -= 1
+                }
+            }
+
+            when(newPeriod){
+                0-> {
+                    if (isAchieved && isEqualFrequency) temp.nrOfAchievedDaily += 1
+                    temp.nrOfTotalDaily += 1
+                }
+                1->{
+                    if (isAchieved && isEqualFrequency) temp.nrOfAchievedWeekly += 1
+                    temp.nrOfTotalWeekly += 1
+                }
+                2->{
+                    if(isAchieved && isEqualFrequency) temp.nrOfAchievedMonthly += 1
+                    temp.nrOfTotalMonthly += 1
+                }
+                3->{
+                    if(isAchieved && isEqualFrequency) temp.nrOfAchievedYearly += 1
+                    temp.nrOfTotalYearly = 1
+                }
+            }
+            if(isAchieved && !isEqualFrequency) temp.nrOfTotalAchieved -= 1
+        }
+    }
 }

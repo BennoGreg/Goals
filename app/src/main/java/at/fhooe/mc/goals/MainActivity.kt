@@ -174,27 +174,27 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    /*fun updateStatistic(goal: Goal){
+    /*fun updateStatistic(goalList: Goal){
 
         realm.beginTransaction()
 
-        when(goal.goalPeriod){
+        when(goalList.goalPeriod){
 
             0 -> {
                 `StatisticsSingleton.stats`!!.nrOfTotalDaily += 1
-                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedDaily += 1
+                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedDaily += 1
             }
             1->{
                 `StatisticsSingleton.stats`!!.nrOfTotalWeekly += 1
-                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedWeekly += 1
+                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedWeekly += 1
             }
             2->{
                 `StatisticsSingleton.stats`!!.nrOfTotalMonthly += 1
-                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedMonthly += 1
+                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedMonthly += 1
             }
             3->{
                 `StatisticsSingleton.stats`!!.nrOfTotalYearly += 1
-                if(goal.goalFrequency == goal.progress) `StatisticsSingleton.stats`!!.nrOfAchievedYearly += 1
+                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedYearly += 1
             }
         }
         realm.commitTransaction()
