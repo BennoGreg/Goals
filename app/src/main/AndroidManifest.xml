@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.newGoal.Reminder.NewReminder"></activity>
+        <activity android:name=".ui.editGoal.EditGoal"
+            android:label="Edit Goal"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".ui.newGoal.NewGoal"
             android:label="@string/title_activity_new_goal"
