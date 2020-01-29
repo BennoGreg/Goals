@@ -1,7 +1,8 @@
-package at.fhooe.mc.goals.ui.newGoal
+package at.fhooe.mc.goals.ui.newGoal.Reminder
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import at.fhooe.mc.goals.ui.newGoal.Reminder.Reminder
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
 class ReminderViewHolder constructor(

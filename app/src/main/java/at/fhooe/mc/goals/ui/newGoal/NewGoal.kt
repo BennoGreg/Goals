@@ -1,22 +1,22 @@
 package at.fhooe.mc.goals.ui.newGoal
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
+import at.fhooe.mc.goals.ui.newGoal.Reminder.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
-import kotlinx.android.synthetic.main.fragment_goals.*
 
 
 class NewGoal : AppCompatActivity() {
@@ -27,11 +27,19 @@ class NewGoal : AppCompatActivity() {
     private var orange = "#e88317"
     private var green = "#4d9446"
     private var reminders = ArrayList<Reminder>()
-    //private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var reminderAdapter: ReminderRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /**
+         * Register Notification channel
+         */
+        NotificationHelper.createNotificationChannel(this,
+            NotificationManagerCompat.IMPORTANCE_HIGH, true,
+            getString(R.string.app_name), "App notification channel.")
+
+
 
         setContentView(R.layout.activity_new_goal)
 
@@ -143,6 +151,8 @@ class NewGoal : AppCompatActivity() {
 
 
 
+
+
     }
 
     @Override
@@ -150,9 +160,40 @@ class NewGoal : AppCompatActivity() {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK) {
+        if(requestCode == 1) {
 
-            Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
+           // Toast.makeText(this, "Time: " + ReminderData.minute + ":"  + ReminderData.hour + " " + ReminderData.am_pm, Toast.LENGTH_SHORT).show()
+
+            var date = ReminderData.reminderDay.toString()+ "." + ReminderData.reminderMonth.toString() + "."+ ReminderData.reminderYear.toString() + " - " + ReminderData.hour.toString() + ":" + ReminderData.minute.toString() + " " + ReminderData.am_pm
+            var period = "never"
+            when (ReminderData.reminderPeriod) {
+
+                0 -> {
+
+                    period = "never"
+                }
+                1 -> {
+
+                    period = "Daily"
+                }
+                2 -> {
+
+                    period = "Weekly"
+                }
+                3 -> {
+
+                    period = "Monthly"
+                }
+                4 -> {
+
+                    period = "Yearly"
+                }
+            }
+            RecyclerReminderData.addReminder(date, period)
+            reminderAdapter.notifyDataSetChanged()
+
+        AlarmScheduler.scheduleAlarmsForReminder(this,ReminderData,"Samplegoal")
 
 
         }
@@ -177,7 +218,7 @@ class NewGoal : AppCompatActivity() {
      * Adds the dummy reminders to the data set
      */
     private fun addReminderDataSet(){
-        val reminderData = dummyData.createDummyData()
+        val reminderData = RecyclerReminderData.reminderList
         reminderAdapter.submitList(reminderData)
     }
 

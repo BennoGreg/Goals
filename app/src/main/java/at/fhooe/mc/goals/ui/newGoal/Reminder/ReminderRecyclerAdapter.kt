@@ -1,4 +1,4 @@
-package at.fhooe.mc.goals.ui.newGoal
+package at.fhooe.mc.goals.ui.newGoal.Reminder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +13,11 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return ReminderViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item_row,parent,false)
+            LayoutInflater.from(parent.context).inflate(
+                R.layout.recyclerview_item_row,
+                parent,
+                false
+            )
         )
 
     }
