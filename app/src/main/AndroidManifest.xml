@@ -10,7 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.newGoal.NewReminder"></activity>
+        <activity
+            android:name=".ui.editGoal.EditGoal"
+            android:label="@string/title_activity_edit_goal"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.newGoal.NewReminder" />
         <activity
             android:name=".ui.newGoal.NewGoal"
             android:label="@string/title_activity_new_goal"

@@ -22,12 +22,7 @@ class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
 
 
 
-        itemView.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                return false
-            }
-
-        })
+        itemView.setOnLongClickListener { clickListener(goal,position) }
         val progress = goal.progress
         val name = goal.name
         val frequency = goal.goalFrequency

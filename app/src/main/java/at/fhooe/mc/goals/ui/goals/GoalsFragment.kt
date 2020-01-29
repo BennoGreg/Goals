@@ -1,6 +1,7 @@
 package at.fhooe.mc.goals.ui.goals
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.editGoal.EditGoal
 import io.realm.Realm
 
 
@@ -189,14 +191,29 @@ class GoalsFragment : Fragment() {
 
     private fun goalClicked(goal: Goal, position: Int) : Boolean{
 
-        realm.beginTransaction()
+        /*realm.beginTransaction()
         data[position].progress = data[position].progress!! + 1
         realm.commitTransaction()
 
         Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
         recyclerView.adapter?.notifyItemChanged(position)
-        Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity,"Clicked: ${goal.name} at position $position", Toast.LENGTH_SHORT).show()*/
+
+        val intent = Intent(context, EditGoal::class.java)
+        intent.putExtra("Goal",goal)
+
+        startActivityForResult(intent,1)
+
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1){
+            activity?.finish()
+
+            startActivity(activity?.intent?.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+        }
     }
 
 
