@@ -3,21 +3,23 @@
     <item android:id="@android:id/background">
         <shape>
             <corners android:radius="8dp"/>
-            <solid android:color="@color/white"/>
-            <stroke android:color="#000000" android:width="2dp"/>
+            <solid android:color="@color/white"/><!--
+            <stroke android:color="#000000" android:width="2dp"/>-->
         </shape>
     </item>
 
-    <item android:id="@android:id/progress"
-        android:top="2dp"
+    <item android:id="@android:id/progress">
+        <!--android:top="2dp"
         android:bottom="2dp"
         android:left="2dp"
-        android:right="2dp">
+        android:right="2dp">-->
 
         <scale android:scaleWidth="100%">
             <shape>
                 <corners android:radius="8dp"/>
-                <solid android:color="@color/colorPrimary"/>
+                <!--<solid android:color="@color/colorPrimary"/>-->
+                <gradient android:startColor="@color/nav_start_color"
+                    android:endColor="@color/nav_end_color"/>
             </shape>
         </scale>
     </item>

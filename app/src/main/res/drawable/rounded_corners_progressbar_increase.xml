@@ -4,20 +4,20 @@
         <shape>
             <corners android:radius="8dp"/>
             <solid android:color="@color/white"/>
-            <stroke android:color="#000000" android:width="2dp"/>
+            <!--<stroke android:color="#000000" android:width="2dp"/>-->
         </shape>
     </item>
 
-    <item android:id="@android:id/progress"
-        android:top="2dp"
+    <item android:id="@android:id/progress">
+        <!--android:top="2dp"
         android:bottom="2dp"
         android:left="2dp"
-        android:right="2dp">
+        android:right="2dp"-->
 
         <scale android:scaleWidth="100%">
             <shape>
                 <corners android:radius="8dp"/>
-                <solid android:color="@color/green"/>
+                <gradient android:startColor="@color/light_green" android:endColor="@color/green" android:angle="360"/>
             </shape>
         </scale>
     </item>

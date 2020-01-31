@@ -8,13 +8,14 @@
     android:background="#c7bf98"
     android:padding="20dp"
     >
+
     <TextView
         android:id="@+id/confirmDeleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/gudea"
         android:text="Click me to change my text color"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
 
     <Button
         android:id="@+id/cancelDeleteButton"

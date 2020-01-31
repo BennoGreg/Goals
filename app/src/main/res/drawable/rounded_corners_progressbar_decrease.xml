@@ -4,20 +4,23 @@
         <shape>
             <corners android:radius="8dp"/>
             <solid android:color="@color/white"/>
-            <stroke android:color="#000000" android:width="2dp"/>
+            <!--<stroke android:color="#000000" android:width="2dp"/>-->
         </shape>
     </item>
 
-    <item android:id="@android:id/progress"
-        android:top="2dp"
+    <item android:id="@android:id/progress">
+        <!--android:top="2dp"
         android:bottom="2dp"
         android:left="2dp"
-        android:right="2dp">
+        android:right="2dp">-->
 
         <scale android:scaleWidth="100%" android:scaleGravity="right" >
             <shape>
                 <corners android:radius="8dp"/>
-                <solid android:color="@color/orange" />
+                <gradient
+                    android:endColor="@color/light_orange"
+                    android:startColor="@color/orange"
+                    android:angle="360"/>
             </shape>
         </scale>
     </item>

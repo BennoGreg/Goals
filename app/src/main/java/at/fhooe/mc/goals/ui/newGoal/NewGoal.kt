@@ -3,20 +3,26 @@ package at.fhooe.mc.goals.ui.newGoal
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
 import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
 import at.fhooe.mc.goals.ui.newGoal.Reminder.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
+import kotlinx.android.synthetic.main.activity_new_goal.view.*
 import kotlinx.android.synthetic.main.content_new_goal.*
+import kotlin.math.min
 
 
 class NewGoal : AppCompatActivity() {
@@ -25,7 +31,9 @@ class NewGoal : AppCompatActivity() {
     private var build = true
     private var currentPeriod = 0
     private var orange = "#e88317"
+    lateinit var orangeGradient: Drawable
     private var green = "#4d9446"
+    lateinit var greenGradient: Drawable
     private var reminders = ArrayList<Reminder>()
     private lateinit var reminderAdapter: ReminderRecyclerAdapter
 
@@ -47,11 +55,17 @@ class NewGoal : AppCompatActivity() {
         addReminderDataSet() // add reminder dummy data
        /* linearLayoutManager = LinearLayoutManager(this)
         reminder_recycler.layoutManager = linearLayoutManager
-*/
-        updatePeriodColor(green)
-        setThemeGreen()
 
-        dailyButton.setBackgroundColor(Color.parseColor(green))
+
+*/
+        greenGradient = getDrawable(R.drawable.green_button_gradient)!!
+        orangeGradient = getDrawable(R.drawable.orange_button_gradient)!!
+
+        setThemeGreen()
+        updatePeriodColor(greenGradient)
+
+
+        dailyButton.background = greenGradient
         realm = Realm.getDefaultInstance()
 
 
@@ -85,9 +99,15 @@ class NewGoal : AppCompatActivity() {
             })
 
             realm.beginTransaction()
+            StatisticsSingleton.stats = realm.where(StatisticData::class.java).findFirst()
+            if(StatisticsSingleton.stats==null){
+                val stat = StatisticData()
+                StatisticsSingleton.stats = realm.copyToRealm(stat)
+            }
             StatisticsSingleton.updateNrOfGoals(currentPeriod,1)
             realm.commitTransaction()
 
+            RecyclerReminderData.reminderList.clear()
             finish()
         }
 
@@ -103,7 +123,7 @@ class NewGoal : AppCompatActivity() {
 
             setThemeGreen() // change Theme of the screen
             build = true
-            updatePeriodColor(green)
+            updatePeriodColor(greenGradient)
 
 
         }
@@ -114,31 +134,31 @@ class NewGoal : AppCompatActivity() {
 
             setThemeOrange()
             build = false
-            updatePeriodColor(orange)
+            updatePeriodColor(orangeGradient)
 
         }
 
         dailyButton.setOnClickListener {
 
             currentPeriod = 0
-            if (build) updatePeriodColor(green) else updatePeriodColor(orange)
+            if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
 
         }
         weeklyButton.setOnClickListener {
 
             currentPeriod = 1
-            if (build) updatePeriodColor(green) else updatePeriodColor(orange)
+            if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
         }
         monthlyButton.setOnClickListener {
 
             currentPeriod = 2
-            if (build) updatePeriodColor(green) else updatePeriodColor(orange)
+            if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
         }
 
         yearlyButton.setOnClickListener {
 
             currentPeriod = 3
-            if (build) updatePeriodColor(green) else updatePeriodColor(orange)
+            if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
         }
 
         addReminderButton.setOnClickListener {
@@ -148,8 +168,6 @@ class NewGoal : AppCompatActivity() {
             startActivityForResult(i,1)
 
         }
-
-
 
 
 
@@ -164,8 +182,19 @@ class NewGoal : AppCompatActivity() {
 
            // Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
            // Toast.makeText(this, "Time: " + ReminderData.minute + ":"  + ReminderData.hour + " " + ReminderData.am_pm, Toast.LENGTH_SHORT).show()
+            var day = ReminderData.reminderDay.toString()
+            if (ReminderData.reminderDay < 10) day = "0$day"
 
-            var date = ReminderData.reminderDay.toString()+ "." + ReminderData.reminderMonth.toString() + "."+ ReminderData.reminderYear.toString() + " - " + ReminderData.hour.toString() + ":" + ReminderData.minute.toString() + " " + ReminderData.am_pm
+            var month = ReminderData.reminderMonth.toString()
+            if(ReminderData.reminderMonth < 10) month = "0$month"
+
+            var hour = ReminderData.hour.toString()
+            if(ReminderData.hour < 10) hour = "0$hour"
+
+            var minute = ReminderData.minute.toString()
+            if(ReminderData.minute < 10) minute = "0$minute"
+
+            var date = day+ "." + month + "."+ ReminderData.reminderYear.toString() + " - " + hour + ":" + minute + " " + ReminderData.am_pm
             var period = "never"
             when (ReminderData.reminderPeriod) {
 
@@ -226,12 +255,12 @@ class NewGoal : AppCompatActivity() {
     /**
      * Function to update the current Color of the goal period buttons.
      */
-    fun updatePeriodColor(color: String){
+    fun updatePeriodColor(gradient: Drawable){
 
         when (currentPeriod){
 
             0->{
-                dailyButton.setBackgroundColor(Color.parseColor(color))
+                dailyButton.background = gradient
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
@@ -240,7 +269,7 @@ class NewGoal : AppCompatActivity() {
             }
             1->{
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                weeklyButton.setBackgroundColor(Color.parseColor(color))
+                weeklyButton.background = gradient
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 frequencyTextField.text = "times per week"
@@ -248,7 +277,7 @@ class NewGoal : AppCompatActivity() {
             2->{
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                monthlyButton.setBackgroundColor(Color.parseColor(color))
+                monthlyButton.background = gradient
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 frequencyTextField.text = "times per month"
             }
@@ -256,7 +285,7 @@ class NewGoal : AppCompatActivity() {
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                yearlyButton.setBackgroundColor(Color.parseColor(color))
+                yearlyButton.background = gradient
                 frequencyTextField.text = "times per year"
             }
 
@@ -273,12 +302,14 @@ class NewGoal : AppCompatActivity() {
      */
     fun setThemeGreen(){
 
-        toolbar_layout.setContentScrimColor(Color.parseColor(green))
-        toolbar.setBackgroundColor(Color.parseColor(green))
-        app_bar.setBackgroundColor(Color.parseColor(green))
-        toolbar_layout.setBackgroundColor(Color.parseColor(green))
+        window.statusBarColor = ContextCompat.getColor(this,android.R.color.black)
+
+        toolbar_layout.setContentScrimResource(R.drawable.green_button_gradient)
+        toolbar.setBackgroundResource(R.drawable.green_button_gradient)
+        app_bar.setBackgroundResource(R.drawable.green_button_gradient)
+        toolbar_layout.setBackgroundResource(R.drawable.green_button_gradient)
         goalNameTextView.setTextColor(Color.parseColor(green))
-        buildButton.setBackgroundColor(Color.parseColor(green))
+        buildButton.setBackgroundResource(R.drawable.green_button_gradient)
         quitButton.setBackgroundColor(Color.parseColor("lightgray"))
         goalPeriodTextView.setTextColor(Color.parseColor(green))
         goalTypeView.setTextColor(Color.parseColor(green))
@@ -291,12 +322,12 @@ class NewGoal : AppCompatActivity() {
      * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
      */
     fun setThemeOrange(){
-        toolbar_layout.setContentScrimColor(Color.parseColor(orange))
-        toolbar.setBackgroundColor(Color.parseColor(orange))
-        app_bar.setBackgroundColor(Color.parseColor(orange))
-        toolbar_layout.setBackgroundColor(Color.parseColor(orange))
+        toolbar_layout.setContentScrimResource(R.drawable.orange_button_gradient)
+        toolbar.setBackgroundResource(R.drawable.orange_button_gradient)
+        app_bar.setBackgroundResource(R.drawable.orange_button_gradient)
+        toolbar_layout.setBackgroundResource(R.drawable.orange_button_gradient)
         goalNameTextView.setTextColor(Color.parseColor(orange))
-        quitButton.setBackgroundColor(Color.parseColor(orange))
+        quitButton.setBackgroundResource(R.drawable.orange_button_gradient)
         buildButton.setBackgroundColor(Color.parseColor("lightgray"))
         goalTypeView.setTextColor(Color.parseColor(orange))
         achieveTextField.setTextColor(Color.parseColor(orange))

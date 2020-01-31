@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteY="297dp">
+        tools:layout_editor_absoluteY="297dp"
+        android:layout_marginBottom="32dp">
 
 
         <TextView
@@ -29,7 +30,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="@font/gudea"/>
 
 
         <TextView
@@ -43,7 +45,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.501"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/monthlyButton" />
+            app:layout_constraintTop_toBottomOf="@+id/monthlyButton"
+            android:fontFamily="@font/gudea"/>
 
         <Button
             android:id="@+id/monthlyButton"
@@ -56,7 +59,8 @@
             app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
             app:layout_constraintEnd_toStartOf="@+id/yearlyButton"
             app:layout_constraintStart_toEndOf="@+id/weeklyButton"
-            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView"
+            android:fontFamily="@font/hind_light"/>
 
         <Button
             android:id="@+id/yearlyButton"
@@ -69,7 +73,8 @@
             app:layout_constraintBottom_toTopOf="@id/achieveTextField"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/monthlyButton"
-            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView"
+            android:fontFamily="@font/hind_light"/>
 
         <Button
             android:id="@+id/weeklyButton"
@@ -81,7 +86,8 @@
             app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
             app:layout_constraintEnd_toStartOf="@+id/monthlyButton"
             app:layout_constraintStart_toEndOf="@+id/dailyButton"
-            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView"
+            android:fontFamily="@font/hind_light"/>
 
         <TextView
             android:id="@+id/goalTypeView"
@@ -93,7 +99,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goalNameEditText" />
+            app:layout_constraintTop_toBottomOf="@+id/goalNameEditText"
+            android:fontFamily="@font/gudea"/>
 
         <Button
             android:id="@+id/buildButton"
@@ -106,7 +113,8 @@
             app:layout_constraintBottom_toTopOf="@+id/goalPeriodTextView"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/quitButton"
-            app:layout_constraintTop_toBottomOf="@+id/goalTypeView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalTypeView"
+            android:fontFamily="@font/hind_light"/>
 
         <Button
             android:id="@+id/quitButton"
@@ -119,7 +127,8 @@
             app:layout_constraintBottom_toTopOf="@+id/goalPeriodTextView"
             app:layout_constraintLeft_toRightOf="@+id/buildButton"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goalTypeView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalTypeView"
+            android:fontFamily="@font/hind_light"/>
 
         <TextView
             android:id="@+id/goalPeriodTextView"
@@ -132,7 +141,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buildButton" />
+            app:layout_constraintTop_toBottomOf="@+id/buildButton"
+            android:fontFamily="@font/gudea"/>
 
         <Button
             android:id="@+id/dailyButton"
@@ -145,7 +155,8 @@
             app:layout_constraintBottom_toTopOf="@+id/achieveTextField"
             app:layout_constraintEnd_toStartOf="@+id/weeklyButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/goalPeriodTextView"
+            android:fontFamily="@font/hind_light"/>
 
         <EditText
             android:id="@+id/frequencyEditText"
@@ -170,7 +181,8 @@
             android:text="@string/frequency_textfield"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/frequencyEditText"
-            app:layout_constraintTop_toBottomOf="@+id/achieveTextField" />
+            app:layout_constraintTop_toBottomOf="@+id/achieveTextField"
+            android:fontFamily="@font/hind_light"/>
 
 
         <EditText
@@ -205,6 +217,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frequencyEditText"
+        android:fontFamily="@font/gudea"
         />
 
     <Button
@@ -219,18 +232,17 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/reminderTextfield"
-        app:layout_constraintTop_toBottomOf="@+id/frequencyEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/frequencyEditText"
+        android:fontFamily="@font/hind_light"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/reminder_recycler"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="190dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/reminderTextfield" />

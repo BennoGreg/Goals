@@ -55,7 +55,7 @@ object AlarmScheduler {
             1000 * 60 * 1,
             alarmIntent
         )
-      //  alarmMgr.cancel(alarmIntent)
+        alarmMgr.cancel(alarmIntent)
 
     }
 

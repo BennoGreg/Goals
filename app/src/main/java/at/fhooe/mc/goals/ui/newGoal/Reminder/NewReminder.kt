@@ -34,6 +34,10 @@ class NewReminder : AppCompatActivity() {
 
         updateRepeatButtons("never")
 
+        neverButton.setOnClickListener {
+            updateRepeatButtons("never")
+        }
+
 
         repeatDailyButton.setOnClickListener {
             updateRepeatButtons("daily")

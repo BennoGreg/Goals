@@ -18,7 +18,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/gudea"/>
 
     <TextView
         android:id="@+id/dateTextfield"
@@ -33,7 +34,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newReminderTextfield" />
+        app:layout_constraintTop_toBottomOf="@+id/newReminderTextfield"
+        android:fontFamily="@font/gudea"/>
 
 
     <DatePicker
@@ -75,7 +77,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timePicker" />
+        app:layout_constraintTop_toBottomOf="@+id/timePicker"
+        android:fontFamily="@font/gudea"/>
 
     <Button
         android:id="@+id/neverButton"
@@ -89,7 +92,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/repeatDailyButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatTextview"
+        android:fontFamily="@font/hind_light"/>
 
     <Button
         android:id="@+id/repeatDailyButton"
@@ -102,7 +106,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/repeatWeeklyButton"
         app:layout_constraintStart_toEndOf="@+id/neverButton"
-        app:layout_constraintTop_toBottomOf="@+id/repeatTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatTextview"
+        android:fontFamily="@font/hind_light"/>
 
     <Button
         android:id="@+id/repeatWeeklyButton"
@@ -115,7 +120,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/repeatMonthlyButton"
         app:layout_constraintStart_toEndOf="@+id/repeatDailyButton"
-        app:layout_constraintTop_toBottomOf="@+id/repeatTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatTextview"
+        android:fontFamily="@font/hind_light"/>
 
     <Button
         android:id="@+id/repeatYearlyButton"
@@ -129,7 +135,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/repeatMonthlyButton"
-        app:layout_constraintTop_toBottomOf="@+id/repeatTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatTextview"
+        android:fontFamily="@font/hind_light"/>
 
     <Button
         android:id="@+id/repeatMonthlyButton"
@@ -138,11 +145,12 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="32dp"
         android:text="Monthly"
-        android:textSize="11sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/repeatYearlyButton"
         app:layout_constraintStart_toEndOf="@+id/repeatWeeklyButton"
-        app:layout_constraintTop_toBottomOf="@+id/repeatTextview" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatTextview"
+        android:fontFamily="@font/hind_light"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/saveReminderButton"

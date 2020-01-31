@@ -14,7 +14,8 @@
         android:layout_gravity="center|start"
         android:layout_weight="0.5"
         android:text="Reminder Name"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:fontFamily="@font/hind_light"/>
 
     <TextView
         android:id="@+id/reminderDate"
@@ -23,6 +24,8 @@
         android:layout_gravity="top|start"
         android:layout_weight="0.5"
         android:ellipsize="end"
+        android:fontFamily="@font/hind_light"
+        android:gravity="start|right"
         android:maxLines="5"
         android:text="reminder Date"
         android:textAlignment="center" />

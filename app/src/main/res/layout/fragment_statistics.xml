@@ -14,10 +14,13 @@
             android:id="@+id/textViewDaily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:text="Daily Goals" />
+            android:text="Daily Goals"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
 
         <RelativeLayout
             android:id="@+id/relativeStatisticDaily"
@@ -29,26 +32,34 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/statistics_progressbar"/>
 
             <TextView
                 android:id="@+id/tv_dailyGoals"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/hind_light"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/textViewWeekly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:text="Weekly Goals" />
+            android:text="Weekly Goals"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/relativeStatisticWeekly"
@@ -59,25 +70,35 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/statistics_progressbar"/>
 
             <TextView
                 android:id="@+id/tv_weeklyGoals"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+
+                android:fontFamily="@font/hind_light"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
         </RelativeLayout>
+
         <TextView
             android:id="@+id/textViewMonthly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="15dp"
-            android:text="Monthly Goals" />
+            android:text="Monthly Goals"
+            android:textAlignment="center"
+            android:textStyle="bold" />
 
 
         <RelativeLayout
@@ -90,26 +111,34 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/statistics_progressbar"/>
 
             <TextView
                 android:id="@+id/tv_monthlyGoals"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/hind_light"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/textViewYearly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:text="Yearly Goals" />
+            android:text="Yearly Goals"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
 
         <RelativeLayout
             android:id="@+id/relativeStatisticYearly"
@@ -120,26 +149,34 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/statistics_progressbar"/>
 
             <TextView
                 android:id="@+id/tv_yearlyGoals"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/hind_light"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/textViewTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="20dp"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:text="Total Goals" />
+            android:text="Total Goals"
+            android:textAlignment="center"
+            android:textStyle="bold"/>
 
         <RelativeLayout
             android:id="@+id/relativeStatisticOverall"
@@ -151,16 +188,22 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
-                android:layout_margin="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
                 android:progressDrawable="@drawable/statistics_progressbar"/>
 
             <TextView
                 android:id="@+id/tv_totalGoals"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15dp"
+                android:fontFamily="@font/hind_light"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:layout_margin="15dp"/>
+                android:textSize="15sp"
+                android:textColor="@android:color/black"/>
 
 
         </RelativeLayout>

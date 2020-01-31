@@ -22,15 +22,18 @@
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="65dp"
             android:progressDrawable="@drawable/rounded_corners_progressbar_increase" />
 
         <TextView
             android:id="@+id/tv_progressBar"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="65dp"
+            android:fontFamily="@font/hind_light"
             android:gravity="center"
-            android:textStyle="bold"/>
+            android:text="Dummytext"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
     </RelativeLayout>
 
 

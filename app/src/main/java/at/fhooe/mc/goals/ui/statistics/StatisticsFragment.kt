@@ -34,7 +34,7 @@ class StatisticsFragment : Fragment() {
         })*/
 
         val activity = activity as MainActivity
-        activity.fab.show()
+        activity.fab.hide()
 
         realm = Realm.getDefaultInstance()
 
