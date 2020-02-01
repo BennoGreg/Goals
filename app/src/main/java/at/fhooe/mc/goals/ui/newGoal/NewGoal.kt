@@ -6,23 +6,23 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
-import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.Database.RecyclerReminderData
+import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
-import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
 import at.fhooe.mc.goals.ui.newGoal.Reminder.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
-import kotlinx.android.synthetic.main.activity_new_goal.view.*
 import kotlinx.android.synthetic.main.content_new_goal.*
-import kotlin.math.min
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NewGoal : AppCompatActivity() {
@@ -34,8 +34,13 @@ class NewGoal : AppCompatActivity() {
     lateinit var orangeGradient: Drawable
     private var green = "#4d9446"
     lateinit var greenGradient: Drawable
-    private var reminders = ArrayList<Reminder>()
+
     private lateinit var reminderAdapter: ReminderRecyclerAdapter
+
+    companion object {
+        private var reminders = ArrayList<Reminder>()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +57,7 @@ class NewGoal : AppCompatActivity() {
         setContentView(R.layout.activity_new_goal)
 
         initReminderRecyclerView() // set up reminder recycler view
-        addReminderDataSet() // add reminder dummy data
+        //addReminderDataSet() // add reminder dummy data
        /* linearLayoutManager = LinearLayoutManager(this)
         reminder_recycler.layoutManager = linearLayoutManager
 
@@ -75,7 +80,28 @@ class NewGoal : AppCompatActivity() {
         saveButton.setOnClickListener{
 
 
-            realm.executeTransactionAsync({
+            realm.executeTransaction{
+                val goal = it.createObject(Goal::class.java)
+                if (goalNameEditText.text.toString().isEmpty()){
+                    goal.name = "My Goal"
+                }else {
+                    goal.name = goalNameEditText.text.toString()
+                }
+                goal.buildQuit = build
+                goal.goalPeriod = currentPeriod
+
+                if (frequencyEditText.text.toString().isEmpty()) goal.goalFrequency = 1
+                else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
+                goal.progress = 0
+
+                for(reminder in reminders){
+                    val managedReminder = realm.copyToRealm(reminder)
+                    goal.reminderList?.add(managedReminder)
+                }
+            }
+
+
+            /*realm.executeTransactionAsync({
 
                 val goal = it.createObject(Goal::class.java)
                 if (goalNameEditText.text.toString().isEmpty()){
@@ -90,13 +116,17 @@ class NewGoal : AppCompatActivity() {
                 else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
                 goal.progress = 0
 
+                for(reminder in reminders){
+                    val managedReminder = realm.copyToRealm(reminder)
+                    goal.reminderList?.add(managedReminder)
+                }
 
 
             },{
                 Log.d("Goal", "Saved successfully")
             },{
                 Log.d("Goal", "Not saved")
-            })
+            })*/
 
             realm.beginTransaction()
             StatisticsSingleton.stats = realm.where(StatisticData::class.java).findFirst()
@@ -156,6 +186,8 @@ class NewGoal : AppCompatActivity() {
         }
 
         yearlyButton.setOnClickListener {
+
+            NotificationHelper.delteNotification(this,1002)
 
             currentPeriod = 3
             if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
@@ -220,9 +252,17 @@ class NewGoal : AppCompatActivity() {
                 }
             }
             RecyclerReminderData.addReminder(date, period)
-            reminderAdapter.notifyDataSetChanged()
 
-        AlarmScheduler.scheduleAlarmsForReminder(this,ReminderData,"Samplegoal")
+
+            val id = UUID.randomUUID().leastSignificantBits
+
+            val reminder= Reminder(id,ReminderData.reminderDay,ReminderData.reminderMonth,ReminderData.reminderYear,ReminderData.hour,ReminderData.minute,ReminderData.am_pm, ReminderData.reminderPeriod)
+            reminders.add(reminder)
+
+            reminderAdapter.submitList(reminders)
+
+            reminderAdapter.notifyDataSetChanged()
+            AlarmScheduler.scheduleAlarmsForReminder(this,ReminderData,id,ReminderData.reminderPeriod)
 
 
         }

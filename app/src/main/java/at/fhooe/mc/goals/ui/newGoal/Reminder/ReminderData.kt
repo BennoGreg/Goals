@@ -4,6 +4,7 @@ import java.util.*
 
 object ReminderData {
 
+    var remID: Long = 0L
     var reminderDay = Calendar.DAY_OF_MONTH
     var reminderMonth = Calendar.MONTH
     var reminderYear = Calendar.YEAR

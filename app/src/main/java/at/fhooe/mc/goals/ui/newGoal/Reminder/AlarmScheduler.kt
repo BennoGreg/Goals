@@ -4,12 +4,13 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateUtils
 import at.fhooe.mc.goals.R
 import java.util.*
 
 object AlarmScheduler {
 
-    private lateinit var alarmIntent: PendingIntent
+    lateinit var alarmIntent: PendingIntent
 
     private fun createPendingIntent(context: Context, reminderData: ReminderData, day: String?): PendingIntent? {
 
@@ -26,13 +27,13 @@ object AlarmScheduler {
 
     }
 
-    fun scheduleAlarmsForReminder(context: Context, reminderData: ReminderData, name: String) {
+    fun scheduleAlarmsForReminder(context: Context, reminderData: ReminderData, id: Long, reminderPeriod: Int) {
 
         // get the AlarmManager reference
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            intent.putExtra("goal", name)
-            PendingIntent.getBroadcast(context, 0, intent, 0)
+            intent.putExtra("ID", id)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
 
@@ -49,13 +50,51 @@ object AlarmScheduler {
         datetimeToAlarm.set(Calendar.DAY_OF_YEAR, ReminderData.reminderDay)
         datetimeToAlarm.set(Calendar.YEAR, ReminderData.reminderYear)
 
-        alarmMgr?.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            datetimeToAlarm.timeInMillis,
-            1000 * 60 * 1,
-            alarmIntent
-        )
-        alarmMgr.cancel(alarmIntent)
+        when(reminderPeriod){
+            0-> {
+                alarmMgr?.set(AlarmManager.RTC_WAKEUP,datetimeToAlarm.timeInMillis, alarmIntent)
+            }
+            1-> {
+                alarmMgr?.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    datetimeToAlarm.timeInMillis,
+                    1000 * 60 * 60 * 24,
+                    alarmIntent
+                )
+            }
+            2-> {
+                alarmMgr?.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    datetimeToAlarm.timeInMillis,
+                    1000 * 60 * 60 * 24 * 7,
+                    alarmIntent
+                )
+            }
+            3-> {
+
+                alarmMgr?.setRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    datetimeToAlarm.timeInMillis,
+                    DateUtils.WEEK_IN_MILLIS*4,
+                    alarmIntent
+                )
+            }
+            4->{
+                alarmMgr?.setInexactRepeating(
+                    AlarmManager.RTC_WAKEUP,
+                    datetimeToAlarm.timeInMillis,
+                    DateUtils.YEAR_IN_MILLIS,
+                    alarmIntent
+                )
+            }
+
+        }
+
+
+
+
+
+        //alarmMgr.cancel(alarmIntent)
 
     }
 

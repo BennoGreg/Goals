@@ -10,11 +10,16 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
+import at.fhooe.mc.goals.ui.newGoal.Reminder.ReminderRecyclerAdapter
 
 import io.realm.Realm
+import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_edit_goal.*
 import kotlinx.android.synthetic.main.activity_edit_goal.app_bar
 import kotlinx.android.synthetic.main.activity_edit_goal.toolbar
@@ -46,6 +51,8 @@ class EditGoal : AppCompatActivity() {
     lateinit var orangeGradient: Drawable
     private var green = "#4d9446"
     lateinit var greenGradient: Drawable
+    lateinit var list: RealmList<Reminder>
+    lateinit var reminderAdapter: ReminderRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,10 +63,16 @@ class EditGoal : AppCompatActivity() {
 
         val goal = GoalSingleton.getGoal(position)
 
+        list = goal.reminderList!!
 
         currentPeriod = goal.goalPeriod!!
         val oldPeriod = currentPeriod
 
+
+        initReminderRecyclerView()
+
+        reminderAdapter.submitList(list)
+        reminderAdapter.notifyDataSetChanged()
 
         greenGradient = getDrawable(R.drawable.green_button_gradient)!!
         orangeGradient = getDrawable(R.drawable.orange_button_gradient)!!
@@ -226,6 +239,19 @@ class EditGoal : AppCompatActivity() {
 
         }
 
+    }
+
+    /**
+     * Sets up the recyclerView for the Reminders
+     */
+    private fun initReminderRecyclerView(){
+
+
+        reminder_recycler.apply {
+            layoutManager = LinearLayoutManager(this@EditGoal)
+            reminderAdapter = ReminderRecyclerAdapter()
+            reminder_recycler.adapter = reminderAdapter
+        }
     }
 
 

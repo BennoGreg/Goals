@@ -2,6 +2,7 @@ package at.fhooe.mc.goals.Database
 
 import io.realm.DynamicRealm
 import io.realm.FieldAttribute
+import io.realm.RealmList
 import io.realm.RealmMigration
 import java.lang.reflect.Field
 import java.util.*
@@ -41,6 +42,22 @@ class MyMigration : RealmMigration{
                 ?.renameField("nrOfArchievedWeekly","nrOfAchievedWeekly")
                 ?.renameField("nrOfArchievedMonthly","nrOfAchievedMonthly")
                 ?.renameField("nrOfArchievedYearly","nrOfAchievedYearly")
+
+        }
+
+        if(oldVersion == 5L){
+
+            schema.create("Reminder").addField("remID", Long::class.java,FieldAttribute.PRIMARY_KEY)
+                .addField("reminderDay", Int::class.java)
+                .addField("reminderMonth", Int:: class.java)
+                .addField("reminderYear", Int::class.java)
+                .addField("hour", Int::class.java)
+                .addField("minute",Int::class.java)
+                .addField("am_pm", String::class.java)
+                .addField("reminderPeriod",Int::class.java)
+
+            schema.get("Goal")?.addRealmListField("reminderList",schema.get("Reminder")!!)
+
 
         }
 

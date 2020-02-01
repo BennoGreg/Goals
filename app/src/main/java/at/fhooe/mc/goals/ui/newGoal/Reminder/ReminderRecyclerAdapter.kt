@@ -3,6 +3,7 @@ package at.fhooe.mc.goals.ui.newGoal.Reminder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.R
 
 class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){

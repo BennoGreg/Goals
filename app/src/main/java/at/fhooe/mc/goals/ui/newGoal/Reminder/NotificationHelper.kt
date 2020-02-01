@@ -1,5 +1,6 @@
 package at.fhooe.mc.goals.ui.newGoal.Reminder
 
+import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -51,12 +52,37 @@ object NotificationHelper {
 
         var builder = NotificationCompat.Builder(context,"goals" )
             .setSmallIcon(R.drawable.button_bordered)
-            .setContentTitle("Goal due")
+            .setContentTitle("Goal stay")
             .setContentText("$name is due")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.notify(1001, builder.build())
+
+
+        var builder2 = NotificationCompat.Builder(context,"goals" )
+            .setSmallIcon(R.drawable.button_bordered)
+            .setContentTitle("Goal delete")
+            .setContentText("$name is due")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager2 = NotificationManagerCompat.from(context)
+        notificationManager2.notify(1002, builder2.build())
+
+
+
+
+
+    }
+
+    fun delteNotification(context: Context, id: Int){
+        val alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            intent.putExtra("goal", 1)
+            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmMgr.cancel(alarmIntent)
 
 
     }
