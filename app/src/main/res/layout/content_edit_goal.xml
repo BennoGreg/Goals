@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="44dp"
             android:layout_marginEnd="124dp"
-            android:text="@string/frequency_textfield"
+            android:text="@string/frequency_textfield_daily"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/frequencyEditText"
             app:layout_constraintTop_toBottomOf="@+id/achieveTextField" />

@@ -130,7 +130,7 @@ class GoalsFragment : Fragment() {
                     var currentProg = data[position].progress
 
                     if (currentProg == data[position].goalFrequency){
-                        val dialogFull = AlertDialog.Builder(this@GoalsFragment.context).setMessage("Goal already achieved").setNeutralButton("OK"){
+                        val dialogFull = AlertDialog.Builder(this@GoalsFragment.context).setMessage(resources.getString(R.string.goal_achieved)).setNeutralButton("OK"){
                             _,_ -> adapter.notifyItemChanged(viewHolder.adapterPosition)
                         }
                             .setOnCancelListener{ adapter.notifyItemChanged(viewHolder.adapterPosition) }
@@ -193,13 +193,6 @@ class GoalsFragment : Fragment() {
 
     private fun goalClicked(goal: Goal, position: Int) : Boolean{
 
-        /*realm.beginTransaction()
-        data[position].progress = data[position].progress!! + 1
-        realm.commitTransaction()
-
-        Log.i("MyTag", "Progress on position $position is ${data[position].progress}")
-        recyclerView.adapter?.notifyItemChanged(position)
-        Toast.makeText(activity,"Clicked: ${goalList.name} at position $position", Toast.LENGTH_SHORT).show()*/
         realm.beginTransaction()
         val result = realm.where(Goal::class.java).findAll()
 
@@ -222,28 +215,6 @@ class GoalsFragment : Fragment() {
     }
 
 
-    fun updateStatistic(goal: Goal){
 
-        when(goal.goalFrequency){
-
-            0 -> {
-                statistics?.nrOfTotalDaily?.inc()
-                if(goal.goalFrequency == goal.progress) statistics?.nrOfAchievedDaily?.inc()
-            }
-            1->{
-                statistics?.nrOfTotalWeekly?.inc()
-                if(goal.goalFrequency == goal.progress) statistics?.nrOfAchievedWeekly?.inc()
-            }
-            2->{
-                statistics?.nrOfTotalMonthly?.inc()
-                if(goal.goalFrequency == goal.progress) statistics?.nrOfAchievedMonthly?.inc()
-            }
-            3->{
-                statistics?.nrOfTotalYearly?.inc()
-                if(goal.goalFrequency == goal.progress) statistics?.nrOfAchievedYearly?.inc()
-            }
-        }
-
-    }
 
 }

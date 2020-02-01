@@ -264,7 +264,7 @@ class NewGoal : AppCompatActivity() {
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                frequencyTextField.text = "times per day"
+                frequencyTextField.text = resources.getString(R.string.frequency_textfield_daily)
 
             }
             1->{
@@ -272,21 +272,21 @@ class NewGoal : AppCompatActivity() {
                 weeklyButton.background = gradient
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                frequencyTextField.text = "times per week"
+                frequencyTextField.text = resources.getString(R.string.frequency_textfield_weekly)
             }
             2->{
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.background = gradient
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
-                frequencyTextField.text = "times per month"
+                frequencyTextField.text = resources.getString(R.string.frequency_textfield_monthly)
             }
             3->{
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.background = gradient
-                frequencyTextField.text = "times per year"
+                frequencyTextField.text = resources.getString(R.string.frequency_textfield_yearly)
             }
 
         }

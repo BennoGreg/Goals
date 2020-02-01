@@ -56,19 +56,19 @@ class StatisticsFragment : Fragment() {
         if (result != null){
 
             //Progressdaily
-            setProgressBar(progressBarDaily,tv_dailyGoals,result.nrOfAchievedDaily,result.nrOfTotalDaily,"this Day")
+            setProgressBar(progressBarDaily,tv_dailyGoals,result.nrOfAchievedDaily,result.nrOfTotalDaily,resources.getString(R.string.daily_progbar))
 
             //Progressweekly
-            setProgressBar(progressBarWeekly,tv_weeklyGoals,result.nrOfAchievedWeekly,result.nrOfTotalWeekly,"this Week")
+            setProgressBar(progressBarWeekly,tv_weeklyGoals,result.nrOfAchievedWeekly,result.nrOfTotalWeekly,resources.getString(R.string.weekly_progbar))
 
             //Progressmonthly
-            setProgressBar(progressBarMonthly,tv_monthlyGoals,result.nrOfAchievedMonthly,result.nrOfTotalMonthly,"this Month")
+            setProgressBar(progressBarMonthly,tv_monthlyGoals,result.nrOfAchievedMonthly,result.nrOfTotalMonthly,resources.getString(R.string.monthly_progbar))
 
             //Progressyearly
-            setProgressBar(progressBarYearly,tv_yearlyGoals,result.nrOfAchievedYearly,result.nrOfTotalYearly,"this Year")
+            setProgressBar(progressBarYearly,tv_yearlyGoals,result.nrOfAchievedYearly,result.nrOfTotalYearly,resources.getString(R.string.yearly_progbar))
 
             //Progresstotal
-            setProgressBar(progressBarTotal,tv_totalGoals,result.nrOfTotalAchieved,result.nrOfTotal,"in Total")
+            setProgressBar(progressBarTotal,tv_totalGoals,result.nrOfTotalAchieved,result.nrOfTotal,resources.getString(R.string.total_progbar))
 
         }
 

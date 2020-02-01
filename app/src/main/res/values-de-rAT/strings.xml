@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Goals</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Goals</string>
+    <string name="nav_header_subtitle">Gewöhn dich ans Positive</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_options">Options</string>
+
+    /* Custom strings */
+    <string name="goalNameProgress">%1$s \ \ \ \ -\ \ \ \  %2$d/%3$d %4$s</string>
+    <string name="daily">pro Tag</string>
+    <string name="weekly">pro Woche</string>
+    <string name="monthly">pro Monat</string>
+    <string name="yearly">pro Jahr</string>
+    <string name="askConfirm">Hast du dieses Goal wirklich erreicht?</string>
+    <string name="askDelete">Willst du dieses Goal wirklich löschen?</string>
+    <string name="noConfirm">Noch nicht.</string>
+    <string name="yesConfirm">Ja, hab ich!</string>
+    <string name="no_delete">Abbrechen</string>
+    <string name="yes_delete">Bestätigen</string>
+    <string name="goalAchieved">Du hast das Goal bereits abgeschlossen!</string>
+    <string name="delete_data_text">Willst du wirklich deine gesamten Daten löschen?\nDas kann nicht rückgängig gemacht werden!</string>
+    <string name="confirm_delete_data">Bestätigen</string>
+    <string name="cancel_delete_data">Abbrechen</string>
+    <string name="about_text">\n\n
+        \"Goals\" wurde von \nBenedikt Langer und Niklas Wagner\n
+        als Semesterprojekt, im Zuge ihres Studiums Mobile Computing an der\n
+        Fachhochschule Oberösterreich (Hagenberg), entwickelt.\n\n
+        Version 2.0, 05. Februar 2020.
+    </string>
+    <string name="goal_completed_color">%1$s</string>
+    <string name="statisticProgressInText">Erreicht \ \ \ \ -\ \ \ \  %1$d/%2$d %3$s</string>
+
+
+    <string name="menu_goals">Meine Goals</string>
+    <string name="menu_statistics">Statistiken</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_settings">Einstellungen</string>
+    <string name="menu_about">Über uns</string>
+    <string name="menu_send">Send</string>
+    <string name="section_other">Weiteres</string>
+    <string name="title_activity_new_goal">Neues Goal</string>
+    <string name="goal_type_view">Goal Art</string>
+    <string name="goal_name_textview">Goal Name</string>
+    <string name="reminder_texfield">Erinnerung</string>
+    <string name="achieve_textfield">Erreiche dein Goal</string>
+    <string name="yearly_button">Jahr</string>
+    <string name="weekly_button">Woche</string>
+    <string name="build_button">Build</string>
+    <string name="quit_button">Quit</string>
+    <string name="goal_period_textview">Goal Periode</string>
+    <string name="daily_button">Tag</string>
+    <string name="frequency_textfield_daily">mal pro Tag</string>
+    <string name="frequency_textfield_weekly">mal pro Woche</string>
+    <string name="frequency_textfield_monthly">mal pro Monat</string>
+    <string name="frequency_textfield_yearly">mal pro Jahr</string>
+    <string name="add_reminder_button">+</string>
+    <string name="goal_name_edittext">gib hier dein Goal ein</string>
+    <string name="monthly_button">Monat</string>
+    <string name="new_reminder">Neue Erinnerung</string>
+    <string name="reminder_select">Wähle Datum und Zeit</string>
+    <string name="reminder_repeat">Wiederhole Erinnerung</string>
+    <string name="btn_never">Nie</string>
+    <string name="goal_achieved">Goal bereits abgeschlossen</string>
+    <string name="delete_data">Lösche gesamte Daten</string>
+    <string name="daily_goals_stats">Tägliche Goals</string>
+    <string name="weekly_goals_stats">Wöchentliche Goals</string>
+    <string name="monthly_goals_stats">Monatliche Goals</string>
+    <string name="yearly_goals_stats">Jährliche Goals</string>
+    <string name="total_goals_stats">Gesamte Goals</string>
+    <string name="daily_progbar">heute</string>
+    <string name="weekly_progbar">diese Woche</string>
+    <string name="monthly_progbar">dieses Monat</string>
+    <string name="yearly_progbar">dieses Jahr</string>
+    <string name="total_progbar">gesamt</string>
+    <string name="standard_goalname">Mein Goal</string>
+
+
+    <string name="action_settings">Einstellungen</string>
+    <string name="title_activity_edit_goal">Goal bearbeiten</string>
+</resources>
