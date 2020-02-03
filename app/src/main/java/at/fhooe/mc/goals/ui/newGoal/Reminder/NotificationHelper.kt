@@ -10,10 +10,14 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.R
+import at.fhooe.mc.goals.ui.editGoal.GoalSingleton
 
 object NotificationHelper {
 
@@ -45,6 +49,22 @@ object NotificationHelper {
             val notificationManager = context.getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+
+    fun showNotification(context: Context?, intent: Intent?) {
+
+
+        val name = intent?.getStringExtra("ReminderName")
+
+        var builder = NotificationCompat.Builder(context!!,"goals" )
+
+            .setSmallIcon(R.drawable.button_bordered)
+            .setContentText(context.resources.getString(R.string.reminder_text) + " " + name)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(1001, builder.build())
     }
 
     fun demoNoti(context: Context, name: String?){

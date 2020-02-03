@@ -28,7 +28,47 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is ReminderViewHolder ->{
-                holder.bind(reminders.get(position))
+
+                var day = reminders[position].reminderDay.toString()
+                if (reminders[position].reminderDay < 10) day = "0$day"
+
+                var month = reminders[position].reminderMonth.toString()
+                if (reminders[position].reminderMonth < 10) month = "0$month"
+
+                var hour = reminders[position].hour.toString()
+                if (reminders[position].hour < 10) hour = "0$hour"
+
+                var minute = reminders[position].minute.toString()
+                if (reminders[position].minute < 10) minute = "0$minute"
+
+                var date = day + "." + month + "."+ reminders[position].reminderYear + " - " + hour + ":" + minute + " " + reminders[position].am_pm
+                holder.reminderName.setText(date)
+                var period = "never"
+                when (reminders[position].reminderPeriod) {
+
+                    0 -> {
+
+                        period = "Never"
+                    }
+                    1 -> {
+
+                        period = "Daily"
+                    }
+                    2 -> {
+
+                        period = "Weekly"
+                    }
+                    3 -> {
+
+                        period = "Monthly"
+                    }
+                    4 -> {
+
+                        period = "Yearly"
+                    }
+                }
+                holder.reminderDate.setText(period)
+               // holder.bind(reminders.get(position))
             }
         }
     }

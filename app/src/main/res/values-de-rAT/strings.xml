@@ -76,6 +76,7 @@
     <string name="yearly_progbar">dieses Jahr</string>
     <string name="total_progbar">gesamt</string>
     <string name="standard_goalname">Mein Goal</string>
+    <string name="reminder_text">Vergiss nicht auf dein Goal: </string>
 
 
     <string name="action_settings">Einstellungen</string>

@@ -3,12 +3,15 @@ package at.fhooe.mc.goals.ui.newGoal.Reminder
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.activity_new_reminder.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 class NewReminder : AppCompatActivity() {
@@ -26,9 +29,16 @@ class NewReminder : AppCompatActivity() {
 
 
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_reminder)
+
+        val cal = Calendar.getInstance()
+        selectedDay = cal.get(Calendar.DAY_OF_MONTH)
+        selectedMonth = cal.get(Calendar.MONTH)+1
+        selectedYear = cal.get(Calendar.YEAR)
 
         OnClickTime()
 
@@ -71,7 +81,8 @@ class NewReminder : AppCompatActivity() {
 
                 val msg = "You Selected: $day/$month/$year"
 
-                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+
+              //  Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
             }
 
 

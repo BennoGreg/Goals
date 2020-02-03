@@ -14,9 +14,9 @@ class AlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
 
 
-        //Log.i("Test","TEST")
 
-        NotificationHelper.demoNoti(context!!, intent?.getStringExtra("Goal"))
+        NotificationHelper.showNotification(context,intent)
+        //NotificationHelper.demoNoti(context!!, intent?.getStringExtra("ID"))
 
     }
     }

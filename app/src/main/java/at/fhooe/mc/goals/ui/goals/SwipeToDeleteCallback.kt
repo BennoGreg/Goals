@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.R
 
-abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+abstract class SwipeToDeleteCallback(context: Context, isGoal: Boolean) : ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
 
     private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_deletebutton_white)
@@ -21,6 +21,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
     private val backgroundColor = Color.parseColor("#f44336")
     private val backgroundSwipeRight = ContextCompat.getColor(context,R.color.colorPrimary)
     private val clearPaint = Paint().apply{xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)}
+    private val swipeRight = isGoal
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -67,7 +68,7 @@ abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleC
             deleteIcon?.setBounds(iconLeft,iconTop,iconRight,iconBottom)
             deleteIcon?.draw(c)
             super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-        }else if (dX > 0){
+        }else if (dX > 0 && swipeRight){
             if (isCanceled){
                 clearCanvas(c,itemView.left.toFloat(),itemView.top.toFloat(),itemView.left + dX/3, itemView.bottom.toFloat())
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)

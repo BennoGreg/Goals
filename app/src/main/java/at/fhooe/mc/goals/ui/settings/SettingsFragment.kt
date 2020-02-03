@@ -13,9 +13,12 @@ import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_settings.*
 import io.realm.Realm
 import android.app.AlertDialog
+import android.app.NotificationManager
+import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
@@ -30,6 +33,16 @@ class SettingsFragment : Fragment(), View.OnClickListener {
 
             run {
                 realm.beginTransaction()
+                val notificationManager = context!!.getSystemService(NotificationManager::class.java)
+
+
+                val result = realm.where(Reminder::class.java).findAll()
+                for(reminder in result){
+                    AlarmScheduler.cancelReminder(context!!,reminder.remID.toInt())
+                    notificationManager.cancel(reminder.remID.toInt())
+                }
+
+
 
                 realm.deleteAll()
 

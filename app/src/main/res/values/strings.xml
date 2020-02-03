@@ -75,6 +75,7 @@
     <string name="yearly_progbar">this Year</string>
     <string name="total_progbar">in Total</string>
     <string name="standard_goalname">My Goal</string>
+    <string name="reminder_text">Do not forget about your goal: </string>
 
 
 

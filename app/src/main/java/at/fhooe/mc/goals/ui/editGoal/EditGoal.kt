@@ -1,6 +1,7 @@
 package at.fhooe.mc.goals.ui.editGoal
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -10,12 +11,20 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Goal
+import at.fhooe.mc.goals.Database.RecyclerReminderData
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
 import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
+import at.fhooe.mc.goals.ui.goals.SwipeToDeleteCallback
+import at.fhooe.mc.goals.ui.newGoal.NewGoal
+import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler
+import at.fhooe.mc.goals.ui.newGoal.Reminder.NewReminder
+import at.fhooe.mc.goals.ui.newGoal.Reminder.ReminderData
 import at.fhooe.mc.goals.ui.newGoal.Reminder.ReminderRecyclerAdapter
 
 import io.realm.Realm
@@ -39,6 +48,7 @@ import kotlinx.android.synthetic.main.content_edit_goal.quitButton
 import kotlinx.android.synthetic.main.content_edit_goal.weeklyButton
 import kotlinx.android.synthetic.main.content_edit_goal.yearlyButton
 import kotlinx.android.synthetic.main.content_new_goal.*
+import java.util.*
 
 
 class EditGoal : AppCompatActivity() {
@@ -51,19 +61,21 @@ class EditGoal : AppCompatActivity() {
     lateinit var orangeGradient: Drawable
     private var green = "#4d9446"
     lateinit var greenGradient: Drawable
-    lateinit var list: RealmList<Reminder>
+    lateinit var reminders: RealmList<Reminder>
     lateinit var reminderAdapter: ReminderRecyclerAdapter
+    var position: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_goal)
         setSupportActionBar(toolbar)
 
-        val position = intent.getIntExtra("position",0)
+        initReminderRecyclerView() // set up reminder recycler view
+        position = intent.getIntExtra("position",0)
 
         val goal = GoalSingleton.getGoal(position)
 
-        list = goal.reminderList!!
+        reminders = goal.reminderList!!
 
         currentPeriod = goal.goalPeriod!!
         val oldPeriod = currentPeriod
@@ -71,7 +83,7 @@ class EditGoal : AppCompatActivity() {
 
         initReminderRecyclerView()
 
-        reminderAdapter.submitList(list)
+        reminderAdapter.submitList(reminders)
         reminderAdapter.notifyDataSetChanged()
 
         greenGradient = getDrawable(R.drawable.green_button_gradient)!!
@@ -197,6 +209,110 @@ class EditGoal : AppCompatActivity() {
             if (build) updatePeriodColor(greenGradient) else updatePeriodColor(orangeGradient)
         }
 
+        addReminderButton.setOnClickListener {
+
+            val i = Intent(this, NewReminder::class.java)
+            startActivityForResult(i,1)
+        }
+
+        val swipeHandler = object : SwipeToDeleteCallback(this,false) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = reminder_recycler.adapter as ReminderRecyclerAdapter
+
+                if ( direction == ItemTouchHelper.LEFT) {
+                    realm.executeTransaction {
+                        reminders.removeAt(viewHolder.adapterPosition)
+                        reminderAdapter.submitList(reminders)
+                        reminderAdapter.notifyDataSetChanged()
+                        adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    }
+
+
+
+                }
+
+
+            }
+
+        }
+
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(reminder_recycler)
+
+    }
+
+    @Override
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == 1) {
+
+            // Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
+            // Toast.makeText(this, "Time: " + ReminderData.minute + ":"  + ReminderData.hour + " " + ReminderData.am_pm, Toast.LENGTH_SHORT).show()
+            var day = ReminderData.reminderDay.toString()
+            if (ReminderData.reminderDay < 10) day = "0$day"
+
+            var month = ReminderData.reminderMonth.toString()
+            if(ReminderData.reminderMonth < 10) month = "0$month"
+
+            var hour = ReminderData.hour.toString()
+            if(ReminderData.hour < 10) hour = "0$hour"
+
+            var minute = ReminderData.minute.toString()
+            if(ReminderData.minute < 10) minute = "0$minute"
+
+            var date = day+ "." + month + "."+ ReminderData.reminderYear.toString() + " - " + hour + ":" + minute + " " + ReminderData.am_pm
+            var period = "never"
+            when (ReminderData.reminderPeriod) {
+
+                0 -> {
+
+                    period = "never"
+                }
+                1 -> {
+
+                    period = "Daily"
+                }
+                2 -> {
+
+                    period = "Weekly"
+                }
+                3 -> {
+
+                    period = "Monthly"
+                }
+                4 -> {
+
+                    period = "Yearly"
+                }
+            }
+            RecyclerReminderData.addReminder(date, period)
+
+
+            val id = UUID.randomUUID().leastSignificantBits
+
+            val reminder= Reminder(id,
+                ReminderData.reminderDay,
+                ReminderData.reminderMonth,
+                ReminderData.reminderYear,
+                ReminderData.hour,
+                ReminderData.minute,
+                ReminderData.am_pm, ReminderData.reminderPeriod)
+
+            realm.executeTransaction{
+                reminders.add(reminder)
+            }
+
+
+            reminderAdapter.submitList(reminders)
+
+            reminderAdapter.notifyDataSetChanged()
+           // AlarmScheduler.scheduleAlarmsForReminder(this, reminder,id.toInt(), ReminderData.reminderPeriod)
+
+
+        }
     }
 
 
@@ -253,6 +369,9 @@ class EditGoal : AppCompatActivity() {
             reminder_recycler.adapter = reminderAdapter
         }
     }
+
+
+
 
 
 

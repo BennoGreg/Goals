@@ -5,7 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.text.format.DateUtils
-import at.fhooe.mc.goals.R
+import at.fhooe.mc.goals.Database.Reminder
 import java.util.*
 
 object AlarmScheduler {
@@ -27,14 +27,27 @@ object AlarmScheduler {
 
     }
 
-    fun scheduleAlarmsForReminder(context: Context, reminderData: ReminderData, id: Long, reminderPeriod: Int) {
+
+    fun cancelReminder(context: Context, id: Int){
+
+        val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
+            PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+        alarmMgr.cancel(alarmIntent)
+
+
+    }
+
+    fun scheduleAlarmsForReminder(context: Context, reminder: Reminder, id: Int, reminderPeriod: Int, name: String) {
 
         // get the AlarmManager reference
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmIntent = Intent(context, AlarmReceiver::class.java).let { intent ->
-            intent.putExtra("ID", id)
-            PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            intent.putExtra("ReminderName",name)
+            PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
+
 
 
 
@@ -42,8 +55,8 @@ object AlarmScheduler {
         // Set up the time to schedule the alarm
         val datetimeToAlarm = Calendar.getInstance(Locale.getDefault())
         datetimeToAlarm.timeInMillis = System.currentTimeMillis()
-        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, reminderData.hour)
-        datetimeToAlarm.set(Calendar.MINUTE, reminderData.minute)
+        datetimeToAlarm.set(Calendar.HOUR_OF_DAY, reminder.hour)
+        datetimeToAlarm.set(Calendar.MINUTE, reminder.minute)
         datetimeToAlarm.set(Calendar.SECOND, 0)
         datetimeToAlarm.set(Calendar.MILLISECOND, 0)
         datetimeToAlarm.set(Calendar.DAY_OF_MONTH, ReminderData.reminderMonth)
@@ -92,11 +105,10 @@ object AlarmScheduler {
 
 
 
-
-
         //alarmMgr.cancel(alarmIntent)
 
     }
+
 
     /**
      * Schedules a single alarm

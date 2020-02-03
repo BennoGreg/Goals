@@ -1,5 +1,6 @@
 package at.fhooe.mc.goals.ui.newGoal
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -10,17 +11,22 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.Database.RecyclerReminderData
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
+import at.fhooe.mc.goals.ui.goals.SwipeToDeleteCallback
 import at.fhooe.mc.goals.ui.newGoal.Reminder.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
+import kotlinx.android.synthetic.main.fragment_goals.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,14 +42,18 @@ class NewGoal : AppCompatActivity() {
     lateinit var greenGradient: Drawable
 
     private lateinit var reminderAdapter: ReminderRecyclerAdapter
+    private var reminders = ArrayList<Reminder>()
 
-    companion object {
-        private var reminders = ArrayList<Reminder>()
-    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+
+
+
 
         /**
          * Register Notification channel
@@ -97,6 +107,8 @@ class NewGoal : AppCompatActivity() {
                 for(reminder in reminders){
                     val managedReminder = realm.copyToRealm(reminder)
                     goal.reminderList?.add(managedReminder)
+
+                    AlarmScheduler.scheduleAlarmsForReminder(this,reminder,reminder.remID.toInt(),reminder.reminderPeriod, goalNameEditText.text.toString())
                 }
             }
 
@@ -140,6 +152,24 @@ class NewGoal : AppCompatActivity() {
             RecyclerReminderData.reminderList.clear()
             finish()
         }
+
+        val swipeHandler = object : SwipeToDeleteCallback(this,false) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = reminder_recycler.adapter as ReminderRecyclerAdapter
+                AlarmScheduler.cancelReminder(this@NewGoal,reminders[viewHolder.adapterPosition].remID.toInt())
+                reminders.removeAt(viewHolder.adapterPosition)
+                reminderAdapter.submitList(reminders)
+                reminderAdapter.notifyDataSetChanged()
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+
+
+            }
+
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(reminder_recycler)
+
 
         content_new_goal.setOnTouchListener { v, event ->
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -254,15 +284,16 @@ class NewGoal : AppCompatActivity() {
             RecyclerReminderData.addReminder(date, period)
 
 
-            val id = UUID.randomUUID().leastSignificantBits
+            val id = UUID.randomUUID().leastSignificantBits.toInt()
 
-            val reminder= Reminder(id,ReminderData.reminderDay,ReminderData.reminderMonth,ReminderData.reminderYear,ReminderData.hour,ReminderData.minute,ReminderData.am_pm, ReminderData.reminderPeriod)
+            val reminder= Reminder(id.toLong(),ReminderData.reminderDay,ReminderData.reminderMonth,ReminderData.reminderYear,ReminderData.hour,ReminderData.minute,ReminderData.am_pm, ReminderData.reminderPeriod)
             reminders.add(reminder)
 
             reminderAdapter.submitList(reminders)
 
             reminderAdapter.notifyDataSetChanged()
-            AlarmScheduler.scheduleAlarmsForReminder(this,ReminderData,id,ReminderData.reminderPeriod)
+
+
 
 
         }
@@ -290,6 +321,12 @@ class NewGoal : AppCompatActivity() {
         val reminderData = RecyclerReminderData.reminderList
         reminderAdapter.submitList(reminderData)
     }
+
+
+
+
+
+
 
 
     /**
@@ -332,6 +369,8 @@ class NewGoal : AppCompatActivity() {
         }
 
     }
+
+
 
 
 

@@ -9,8 +9,8 @@ class ReminderViewHolder constructor(
     itemView: View
 ): RecyclerView.ViewHolder(itemView) {
 
-    val reminderName = itemView.reminderName
-    val reminderDate = itemView.reminderDate
+    var reminderName = itemView.reminderDate
+    var reminderDate = itemView.reminderPeriod
 
     fun bind(reminder: Reminder){
 

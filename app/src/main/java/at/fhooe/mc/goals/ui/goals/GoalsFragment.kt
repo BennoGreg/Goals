@@ -98,7 +98,7 @@ class GoalsFragment : Fragment() {
 
         recyclerView.adapter = RecyclerAdapter(data) { goal: Goal, position: Int -> goalClicked(goal, position) }
 
-        val swipeHandler = object : SwipeToDeleteCallback(context!!) {
+        val swipeHandler = object : SwipeToDeleteCallback(context!!,true) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = recyclerView.adapter as RecyclerAdapter
                 if (direction == ItemTouchHelper.LEFT){
