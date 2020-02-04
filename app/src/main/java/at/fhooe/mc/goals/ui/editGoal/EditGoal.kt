@@ -221,6 +221,7 @@ class EditGoal : AppCompatActivity() {
 
                 if ( direction == ItemTouchHelper.LEFT) {
                     realm.executeTransaction {
+                        AlarmScheduler.cancelReminder(this@EditGoal,reminders[viewHolder.adapterPosition]?.remID?.toInt()!!)
                         reminders.removeAt(viewHolder.adapterPosition)
                         reminderAdapter.submitList(reminders)
                         reminderAdapter.notifyDataSetChanged()

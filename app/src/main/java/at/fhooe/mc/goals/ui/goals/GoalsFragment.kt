@@ -18,6 +18,7 @@ import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.StatisticsSingleton
 import at.fhooe.mc.goals.ui.editGoal.EditGoal
 import at.fhooe.mc.goals.ui.editGoal.GoalSingleton
+import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler
 import io.realm.Realm
 
 
@@ -108,13 +109,24 @@ class GoalsFragment : Fragment() {
                         run {
 
                             val period = data[viewHolder.adapterPosition].goalPeriod as Int
+                            val reminders = data[viewHolder.adapterPosition].reminderList
+                            if(reminders != null){
+                                for (reminder in reminders){
+                                    AlarmScheduler.cancelReminder(context!!,reminder.remID.toInt()
+
+                                    )
+                                }
+                            }
+
+
                             data.removeAt(viewHolder.adapterPosition)
                             realm.beginTransaction()
                             result.deleteFromRealm(viewHolder.adapterPosition)
                             StatisticsSingleton.updateNrOfGoals(period, -1)
+
                             realm.commitTransaction()
 
-                            adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                            adapter.notifyDataSetChanged()
                         }
                     }.setNegativeButton(R.string.no_delete){
                             _, _ -> adapter.notifyItemChanged(viewHolder.adapterPosition)
