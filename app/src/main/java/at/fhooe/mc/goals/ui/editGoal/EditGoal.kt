@@ -20,7 +20,6 @@ import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler
 import at.fhooe.mc.goals.ui.newGoal.Reminder.NewReminder
 import at.fhooe.mc.goals.ui.newGoal.Reminder.ReminderData
 import at.fhooe.mc.goals.ui.newGoal.Reminder.ReminderRecyclerAdapter
-
 import io.realm.Realm
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.activity_edit_goal.*
@@ -47,7 +46,6 @@ import java.util.*
 class EditGoal : AppCompatActivity() {
 
     lateinit var realm: Realm
-
     private var build = true
     private var currentPeriod = 0
     private var orange = "#e88317"
@@ -63,18 +61,12 @@ class EditGoal : AppCompatActivity() {
         setContentView(R.layout.activity_edit_goal)
         setSupportActionBar(toolbar)
 
-        initReminderRecyclerView() // set up reminder recycler view
-        position = intent.getIntExtra("position",0)
-
+        initReminderRecyclerView()
+        position = intent.getIntExtra("position", 0)
         val goal = GoalSingleton.getGoal(position)
-
         reminders = goal.reminderList!!
-
         currentPeriod = goal.goalPeriod!!
         val oldPeriod = currentPeriod
-
-
-        initReminderRecyclerView()
 
         reminderAdapter.submitList(reminders)
         reminderAdapter.notifyDataSetChanged()
@@ -92,12 +84,12 @@ class EditGoal : AppCompatActivity() {
 
         val oldFrequency = goal.goalFrequency
 
-        if (goal.buildQuit == false){
+        if (goal.buildQuit == false) {
             setThemeOrange()
             build = false
             updatePeriodColor(orangeGradient)
-        }else{
-            setThemeGreen() // change Theme of the screen
+        } else {
+            setThemeGreen()
             build = true
             updatePeriodColor(greenGradient)
         }
@@ -107,45 +99,29 @@ class EditGoal : AppCompatActivity() {
 
 
 
-        fab.setOnClickListener {
-            /*realm.executeTransactionAsync({
-
-                if (goalNameEditText.text.toString().isEmpty()){
-                    goal.name = "My Goal"
-                }else {
-                    goal.name = goalNameEditText.text.toString()
-                }
-                goal.buildQuit = build
-                goal.goalPeriod = currentPeriod
-
-                if (frequencyEditText.text.toString().isEmpty()) goal.goalFrequency = 1
-                else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
-                goal.progress = 0
-
-
-
-            },{
-                Log.d("Goal", "Saved successfully")
-            },{
-                Log.d("Goal", "Not saved")
-            })*/
+        saveEditedGoalButton.setOnClickListener {
 
             realm.beginTransaction()
-            if (goalNameEditText.text.toString().isEmpty()){
+            if (goalNameEditText.text.toString().isEmpty()) {
                 goal.name = "My Goal"
-            }else {
+            } else {
                 goal.name = goalNameEditText.text.toString()
             }
             goal.buildQuit = build
             goal.goalPeriod = currentPeriod
 
             if (frequencyEditText.text.toString().isEmpty()) goal.goalFrequency = 1
-            else goal.goalFrequency =  Integer.parseInt(frequencyEditText.text.toString())
+            else goal.goalFrequency = Integer.parseInt(frequencyEditText.text.toString())
 
             val isAchieved = goal.progress == oldFrequency
             val isEqualFrequency = goal.goalFrequency == oldFrequency
 
-            StatisticsSingleton.updateAfterEdit(oldPeriod,currentPeriod,isAchieved,isEqualFrequency)
+            StatisticsSingleton.updateAfterEdit(
+                oldPeriod,
+                currentPeriod,
+                isAchieved,
+                isEqualFrequency
+            )
 
             realm.commitTransaction()
 
@@ -154,7 +130,7 @@ class EditGoal : AppCompatActivity() {
 
         content_edit_goal.setOnTouchListener { v, event ->
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus?.windowToken,0)
+            imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
             false
         }
 
@@ -162,13 +138,11 @@ class EditGoal : AppCompatActivity() {
 
         buildButton.setOnClickListener {
 
-            setThemeGreen() // change Theme of the screen
+            setThemeGreen()
             build = true
             updatePeriodColor(greenGradient)
 
-
         }
-
 
 
         quitButton.setOnClickListener {
@@ -205,31 +179,28 @@ class EditGoal : AppCompatActivity() {
         addReminderButton.setOnClickListener {
 
             val i = Intent(this, NewReminder::class.java)
-            startActivityForResult(i,1)
+            startActivityForResult(i, 1)
         }
 
-        val swipeHandler = object : SwipeToDeleteCallback(this,false) {
+
+        val swipeHandler = object : SwipeToDeleteCallback(this, false) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val adapter = reminder_recycler.adapter as ReminderRecyclerAdapter
 
-                if ( direction == ItemTouchHelper.LEFT) {
+                if (direction == ItemTouchHelper.LEFT) {
                     realm.executeTransaction {
-                        AlarmScheduler.cancelReminder(this@EditGoal,reminders[viewHolder.adapterPosition]?.remID?.toInt()!!)
+                        AlarmScheduler.cancelReminder(
+                            this@EditGoal,
+                            reminders[viewHolder.adapterPosition]?.remID?.toInt()!!
+                        )
                         reminders.removeAt(viewHolder.adapterPosition)
                         reminderAdapter.submitList(reminders)
                         reminderAdapter.notifyDataSetChanged()
                         adapter.notifyItemRemoved(viewHolder.adapterPosition)
                     }
-
-
-
                 }
-
-
             }
-
         }
-
 
         val itemTouchHelper = ItemTouchHelper(swipeHandler)
         itemTouchHelper.attachToRecyclerView(reminder_recycler)
@@ -241,24 +212,24 @@ class EditGoal : AppCompatActivity() {
 
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == 1) {
+        if (requestCode == 1) {
 
-            // Toast.makeText(this, "Day: " + ReminderData.reminderDay + "Month: " + ReminderData.reminderMonth + "Year: " + ReminderData.reminderYear, Toast.LENGTH_SHORT).show()
-            // Toast.makeText(this, "Time: " + ReminderData.minute + ":"  + ReminderData.hour + " " + ReminderData.am_pm, Toast.LENGTH_SHORT).show()
             var day = ReminderData.reminderDay.toString()
             if (ReminderData.reminderDay < 10) day = "0$day"
 
             var month = ReminderData.reminderMonth.toString()
-            if(ReminderData.reminderMonth < 10) month = "0$month"
+            if (ReminderData.reminderMonth < 10) month = "0$month"
 
             var hour = ReminderData.hour.toString()
-            if(ReminderData.hour < 10) hour = "0$hour"
+            if (ReminderData.hour < 10) hour = "0$hour"
 
             var minute = ReminderData.minute.toString()
-            if(ReminderData.minute < 10) minute = "0$minute"
+            if (ReminderData.minute < 10) minute = "0$minute"
 
-            var date = day+ "." + month + "."+ ReminderData.reminderYear.toString() + " - " + hour + ":" + minute + " " + ReminderData.am_pm
+            var date =
+                day + "." + month + "." + ReminderData.reminderYear.toString() + " - " + hour + ":" + minute + " " + ReminderData.am_pm
             var period = "never"
+
             when (ReminderData.reminderPeriod) {
 
                 0 -> {
@@ -287,37 +258,30 @@ class EditGoal : AppCompatActivity() {
 
             val id = UUID.randomUUID().leastSignificantBits
 
-            val reminder= Reminder(id,
+            val reminder = Reminder(
+                id,
                 ReminderData.reminderDay,
                 ReminderData.reminderMonth,
                 ReminderData.reminderYear,
                 ReminderData.hour,
                 ReminderData.minute,
-                ReminderData.am_pm, ReminderData.reminderPeriod)
+                ReminderData.am_pm, ReminderData.reminderPeriod
+            )
 
-            realm.executeTransaction{
+            realm.executeTransaction {
                 reminders.add(reminder)
             }
-
-
             reminderAdapter.submitList(reminders)
-
             reminderAdapter.notifyDataSetChanged()
-           // AlarmScheduler.scheduleAlarmsForReminder(this, reminder,id.toInt(), ReminderData.reminderPeriod)
-
 
         }
     }
 
+    fun updatePeriodColor(gradient: Drawable) {
 
-    /**
-     * Function to update the current Color of the goalList period buttons.
-     */
-    fun updatePeriodColor(gradient: Drawable){
+        when (currentPeriod) {
 
-        when (currentPeriod){
-
-            0->{
+            0 -> {
                 dailyButton.background = gradient
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
@@ -325,21 +289,21 @@ class EditGoal : AppCompatActivity() {
                 frequencyTextField.text = "times per day"
 
             }
-            1->{
+            1 -> {
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.background = gradient
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 frequencyTextField.text = "times per week"
             }
-            2->{
+            2 -> {
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.background = gradient
                 yearlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 frequencyTextField.text = "times per month"
             }
-            3->{
+            3 -> {
                 dailyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 weeklyButton.setBackgroundColor(Color.parseColor("lightgrey"))
                 monthlyButton.setBackgroundColor(Color.parseColor("lightgrey"))
@@ -351,10 +315,8 @@ class EditGoal : AppCompatActivity() {
 
     }
 
-    /**
-     * Sets up the recyclerView for the Reminders
-     */
-    private fun initReminderRecyclerView(){
+
+    private fun initReminderRecyclerView() {
 
 
         reminder_recycler.apply {
@@ -365,18 +327,9 @@ class EditGoal : AppCompatActivity() {
     }
 
 
+    fun setThemeGreen() {
 
-
-
-
-
-
-    /**
-     * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
-     */
-    fun setThemeGreen(){
-
-        window.statusBarColor = ContextCompat.getColor(this,android.R.color.black)
+        window.statusBarColor = ContextCompat.getColor(this, android.R.color.black)
 
         toolbar_layout.setContentScrimResource(R.drawable.green_button_gradient)
         toolbar.setBackgroundResource(R.drawable.green_button_gradient)
@@ -392,10 +345,7 @@ class EditGoal : AppCompatActivity() {
 
     }
 
-    /**
-     * Function to set the theme of the NewGoalScreen to Green (Build-Goal)
-     */
-    fun setThemeOrange(){
+    fun setThemeOrange() {
         toolbar_layout.setContentScrimResource(R.drawable.orange_button_gradient)
         toolbar.setBackgroundResource(R.drawable.orange_button_gradient)
         app_bar.setBackgroundResource(R.drawable.orange_button_gradient)

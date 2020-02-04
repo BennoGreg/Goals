@@ -3,15 +3,11 @@ package at.fhooe.mc.goals.ui.newGoal.Reminder
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.DatePicker
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.activity_new_reminder.*
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 
 class NewReminder : AppCompatActivity() {
@@ -20,16 +16,10 @@ class NewReminder : AppCompatActivity() {
     var selectedDay = Calendar.DAY_OF_MONTH
     var selectedMonth = Calendar.MONTH
     var selectedYear = Calendar.YEAR
-
     var selectedMinute = Calendar.MINUTE
     var selectedHour = Calendar.HOUR
     var selectedAM_PM = "am_pm"
-
     var reminderPeriod = 0
-
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +27,7 @@ class NewReminder : AppCompatActivity() {
 
         val cal = Calendar.getInstance()
         selectedDay = cal.get(Calendar.DAY_OF_MONTH)
-        selectedMonth = cal.get(Calendar.MONTH)+1
+        selectedMonth = cal.get(Calendar.MONTH) + 1
         selectedYear = cal.get(Calendar.YEAR)
 
         OnClickTime()
@@ -66,24 +56,20 @@ class NewReminder : AppCompatActivity() {
         }
 
 
+        val datePicker = findViewById<DatePicker>(R.id.datePicker)
+        val today = Calendar.getInstance()
+        datePicker.init(
+            today.get(Calendar.YEAR), today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+        )
+        { view, year, month, day ->
+            val month = month + 1
 
-            val datePicker = findViewById<DatePicker>(R.id.datePicker)
-            val today = Calendar.getInstance()
-            datePicker.init(today.get(Calendar.YEAR), today.get(Calendar.MONTH),
-                today.get(Calendar.DAY_OF_MONTH)
-            )
-            { view, year, month, day ->
-                val month = month + 1
+            selectedDay = day
+            selectedMonth = month
+            selectedYear = year
 
-                selectedDay = day
-                selectedMonth = month
-                selectedYear = year
-
-                val msg = "You Selected: $day/$month/$year"
-
-
-              //  Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
-            }
+        }
 
 
         saveReminderButton.setOnClickListener {
@@ -98,41 +84,37 @@ class NewReminder : AppCompatActivity() {
             finish()
         }
 
-
-
-
     }
 
-    /**
-     * Function to save the selected time
-     */
+
     private fun OnClickTime() {
 
 
         val timePicker = findViewById<TimePicker>(R.id.timePicker)
-        timePicker.setOnTimeChangedListener { _, hour, minute -> var hour = hour
+        timePicker.setOnTimeChangedListener { _, hour, minute ->
+            var hour = hour
             var am_pm = ""
             // AM_PM decider logic
-            when {hour == 0 -> { hour += 12
-                am_pm = "AM"
-            }
+            when {
+                hour == 0 -> {
+                    hour += 12
+                    am_pm = "AM"
+                }
                 hour == 12 -> am_pm = "PM"
-                hour > 12 -> { hour -= 12
+                hour > 12 -> {
+                    hour -= 12
                     am_pm = "PM"
                 }
                 else -> am_pm = "AM"
             }
 
-                val finalHour = if (hour < 10) "0" + hour else hour
-                val min = if (minute < 10) "0" + minute else minute
-                // display format of time
+            val finalHour = if (hour < 10) "0" + hour else hour
+            val min = if (minute < 10) "0" + minute else minute
+            // display format of time
 
-
-           selectedMinute = Integer.parseInt(min.toString())
+            selectedMinute = Integer.parseInt(min.toString())
             selectedHour = Integer.parseInt(finalHour.toString())
             selectedAM_PM = am_pm
-
-
 
 
         }
@@ -142,7 +124,7 @@ class NewReminder : AppCompatActivity() {
     /**
      * Updates the colors of the repeat buttons when the user changes his choice
      */
-    fun updateRepeatButtons(repeatPeriod: String){
+    fun updateRepeatButtons(repeatPeriod: String) {
 
         when (repeatPeriod) {
 
@@ -156,7 +138,12 @@ class NewReminder : AppCompatActivity() {
             }
             "daily" -> {
                 neverButton.setBackgroundColor(Color.parseColor("lightgray"))
-                repeatDailyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                repeatDailyButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
                 repeatWeeklyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatMonthlyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatYearlyButton.setBackgroundColor(Color.parseColor("lightgray"))
@@ -165,7 +152,12 @@ class NewReminder : AppCompatActivity() {
             "weekly" -> {
                 neverButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatDailyButton.setBackgroundColor(Color.parseColor("lightgray"))
-                repeatWeeklyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                repeatWeeklyButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
                 repeatMonthlyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatYearlyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 reminderPeriod = 2
@@ -174,7 +166,12 @@ class NewReminder : AppCompatActivity() {
                 neverButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatDailyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatWeeklyButton.setBackgroundColor(Color.parseColor("lightgray"))
-                repeatMonthlyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                repeatMonthlyButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
                 repeatYearlyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 reminderPeriod = 3
             }
@@ -183,7 +180,12 @@ class NewReminder : AppCompatActivity() {
                 repeatDailyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatWeeklyButton.setBackgroundColor(Color.parseColor("lightgray"))
                 repeatMonthlyButton.setBackgroundColor(Color.parseColor("lightgray"))
-                repeatYearlyButton.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                repeatYearlyButton.setBackgroundColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.colorPrimary
+                    )
+                )
                 reminderPeriod = 4
             }
 

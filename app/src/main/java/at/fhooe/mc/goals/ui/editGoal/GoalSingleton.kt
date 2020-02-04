@@ -6,13 +6,11 @@ object GoalSingleton {
 
     var goalList: List<Goal>? = null
 
-
-    fun getGoal(position: Int) : Goal{
+    fun getGoal(position: Int): Goal {
         val list = goalList as List<Goal>
 
         return list[position]
     }
-
 
 
 }

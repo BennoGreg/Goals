@@ -28,9 +28,6 @@ class AboutFragment : Fragment() {
             textView.text = resources.getText(R.string.about_text)
         })
 
-
-
-
         return root
     }
 }

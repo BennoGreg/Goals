@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.R
 
-class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     private var reminders: List<Reminder> = ArrayList()
@@ -24,10 +24,9 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     }
 
 
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-            is ReminderViewHolder ->{
+        when (holder) {
+            is ReminderViewHolder -> {
 
                 var day = reminders[position].reminderDay.toString()
                 if (reminders[position].reminderDay < 10) day = "0$day"
@@ -41,7 +40,8 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                 var minute = reminders[position].minute.toString()
                 if (reminders[position].minute < 10) minute = "0$minute"
 
-                var date = day + "." + month + "."+ reminders[position].reminderYear + " - " + hour + ":" + minute + " " + reminders[position].am_pm
+                var date =
+                    day + "." + month + "." + reminders[position].reminderYear + " - " + hour + ":" + minute + " " + reminders[position].am_pm
                 holder.reminderName.setText(date)
                 var period = "never"
                 when (reminders[position].reminderPeriod) {
@@ -68,7 +68,6 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
                     }
                 }
                 holder.reminderDate.setText(period)
-               // holder.bind(reminders.get(position))
             }
         }
     }
@@ -77,7 +76,7 @@ class ReminderRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         return reminders.size
     }
 
-    fun submitList(reminderList: List<Reminder>){
+    fun submitList(reminderList: List<Reminder>) {
         reminders = reminderList
     }
 

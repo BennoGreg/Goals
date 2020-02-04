@@ -9,14 +9,10 @@ import at.fhooe.mc.goals.R
 
 class AlarmReceiver : BroadcastReceiver() {
 
-    private val TAG = AlarmReceiver::class.java.simpleName
 
     override fun onReceive(context: Context?, intent: Intent?) {
 
-
-
-        NotificationHelper.showNotification(context,intent)
-        //NotificationHelper.demoNoti(context!!, intent?.getStringExtra("ID"))
+        NotificationHelper.showNotification(context, intent)
 
     }
-    }
+}
