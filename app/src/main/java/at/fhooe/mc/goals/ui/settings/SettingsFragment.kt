@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import at.fhooe.mc.goals.R
 import kotlinx.android.synthetic.main.fragment_settings.*
@@ -17,9 +16,8 @@ import android.app.NotificationManager
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.MainActivity
-import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.statistics.StatisticsSingleton
 import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class SettingsFragment : Fragment(), View.OnClickListener {

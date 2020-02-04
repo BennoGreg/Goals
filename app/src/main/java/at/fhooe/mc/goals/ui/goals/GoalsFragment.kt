@@ -15,7 +15,7 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.MainActivity
-import at.fhooe.mc.goals.StatisticsSingleton
+import at.fhooe.mc.goals.ui.statistics.StatisticsSingleton
 import at.fhooe.mc.goals.ui.editGoal.EditGoal
 import at.fhooe.mc.goals.ui.editGoal.GoalSingleton
 import at.fhooe.mc.goals.ui.newGoal.Reminder.AlarmScheduler

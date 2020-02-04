@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import at.fhooe.mc.goals.MainActivity
 import at.fhooe.mc.goals.R
-import at.fhooe.mc.goals.StatisticsSingleton
 import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_statistics.*
 

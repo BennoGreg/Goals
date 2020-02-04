@@ -1,12 +1,10 @@
 package at.fhooe.mc.goals.ui.newGoal
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
@@ -19,14 +17,12 @@ import at.fhooe.mc.goals.Database.RecyclerReminderData
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.R
-import at.fhooe.mc.goals.StatisticsSingleton
-import at.fhooe.mc.goals.ui.goals.RecyclerAdapter
+import at.fhooe.mc.goals.ui.statistics.StatisticsSingleton
 import at.fhooe.mc.goals.ui.goals.SwipeToDeleteCallback
 import at.fhooe.mc.goals.ui.newGoal.Reminder.*
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_new_goal.*
 import kotlinx.android.synthetic.main.content_new_goal.*
-import kotlinx.android.synthetic.main.fragment_goals.*
 import java.util.*
 import kotlin.collections.ArrayList
 

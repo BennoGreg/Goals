@@ -1,4 +1,4 @@
-package at.fhooe.mc.goals
+package at.fhooe.mc.goals.ui.statistics
 
 import at.fhooe.mc.goals.Database.StatisticData
 

@@ -3,7 +3,7 @@
     package="at.fhooe.mc.goals">
 
     <application
-        android:name=".RealmApplication"
+        android:name=".Database.RealmApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

@@ -1,4 +1,4 @@
-package at.fhooe.mc.goals
+package at.fhooe.mc.goals.Database
 
 import android.app.Application
 import at.fhooe.mc.goals.Database.MyMigration

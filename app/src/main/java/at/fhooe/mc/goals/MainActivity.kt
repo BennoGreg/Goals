@@ -20,6 +20,7 @@ import io.realm.Realm
 import at.fhooe.mc.goals.Database.Goal
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.ui.newGoal.NewGoal
+import at.fhooe.mc.goals.ui.statistics.StatisticsSingleton
 import java.util.*
 
 
@@ -29,14 +30,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var realm: Realm
     public lateinit var fab: FloatingActionButton
 
-    /*private var `StatisticsSingleton.stats StatisticData? = null*/
-
-
+  
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         realm = Realm.getDefaultInstance()
-
 
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -47,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
 
             val i = Intent(this, NewGoal::class.java)
-            i.putExtra("newGoal",0)
+            i.putExtra("newGoal", 0)
 
             startActivityForResult(i, 0)
         }
@@ -58,8 +56,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_goals, R.id.nav_statistics, R.id.nav_slideshow,
-                R.id.nav_settings, R.id.nav_about, R.id.nav_send
+                R.id.nav_goals, R.id.nav_statistics,
+                R.id.nav_settings, R.id.nav_about
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -67,15 +65,15 @@ class MainActivity : AppCompatActivity() {
 
         realm.beginTransaction()
         StatisticsSingleton.stats = realm.where(StatisticData::class.java).findFirst()
-        if(StatisticsSingleton.stats==null){
+        if (StatisticsSingleton.stats == null) {
             val stat = StatisticData()
             StatisticsSingleton.stats = realm.copyToRealm(stat)
         }
         realm.commitTransaction()
 
-        val pref = getSharedPreferences("lastLoginTime",Context.MODE_PRIVATE)
+        val pref = getSharedPreferences("lastLoginTime", Context.MODE_PRIVATE)
 
-        val lastTime = pref.getLong("lastLoginTime",System.currentTimeMillis())
+        val lastTime = pref.getLong("lastLoginTime", System.currentTimeMillis())
 
         val actual = System.currentTimeMillis()
         val lastCalendar = Calendar.getInstance()
@@ -84,10 +82,10 @@ class MainActivity : AppCompatActivity() {
         val currentCalendar = Calendar.getInstance()
         currentCalendar.timeInMillis = actual
 
-        if (lastCalendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR)){
+        if (lastCalendar.get(Calendar.DAY_OF_YEAR) != currentCalendar.get(Calendar.DAY_OF_YEAR)) {
             realm.beginTransaction()
             val result = realm.where(Goal::class.java).findAll()
-            for(goal in result){
+            for (goal in result) {
                 updateGoal(goal, currentCalendar)
             }
             realm.commitTransaction()
@@ -96,18 +94,16 @@ class MainActivity : AppCompatActivity() {
         val edt = pref.edit()
 
 
-        edt.putLong("lastLoginTime",actual)
+        edt.putLong("lastLoginTime", actual)
         currentCalendar.timeInMillis = actual
 
         edt.commit()
 
 
-
-
     }
 
 
-    private fun updateGoal(goal: Goal, current: Calendar){
+    private fun updateGoal(goal: Goal, current: Calendar) {
 
         val period = goal.goalPeriod as Int
 
@@ -116,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         val monthDay = current.get(Calendar.DAY_OF_MONTH)
 
         val yearDay = current.get(Calendar.DAY_OF_YEAR)
-        when(period){
+        when (period) {
 
             0 -> {
                 goal.progress = 0
@@ -149,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 0){
+        if (requestCode == 0) {
 
             finish()
             startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
@@ -170,38 +166,6 @@ class MainActivity : AppCompatActivity() {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return super.onTouchEvent(event)
     }
-
-
-
-
-    /*fun updateStatistic(goalList: Goal){
-
-        realm.beginTransaction()
-
-        when(goalList.goalPeriod){
-
-            0 -> {
-                `StatisticsSingleton.stats`!!.nrOfTotalDaily += 1
-                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedDaily += 1
-            }
-            1->{
-                `StatisticsSingleton.stats`!!.nrOfTotalWeekly += 1
-                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedWeekly += 1
-            }
-            2->{
-                `StatisticsSingleton.stats`!!.nrOfTotalMonthly += 1
-                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedMonthly += 1
-            }
-            3->{
-                `StatisticsSingleton.stats`!!.nrOfTotalYearly += 1
-                if(goalList.goalFrequency == goalList.progress) `StatisticsSingleton.stats`!!.nrOfAchievedYearly += 1
-            }
-        }
-        realm.commitTransaction()
-
-    }*/
-
-
 
 
 }
