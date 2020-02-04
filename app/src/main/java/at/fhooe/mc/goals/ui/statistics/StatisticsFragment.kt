@@ -27,10 +27,6 @@ class StatisticsFragment : Fragment() {
         statisticsViewModel =
             ViewModelProviders.of(this).get(StatisticsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_statistics, container, false)
-        /*val textView: TextView = root.findViewById(R.id.text_gallery)
-        statisticsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })*/
 
         val activity = activity as MainActivity
         activity.fab.hide()
@@ -44,41 +40,70 @@ class StatisticsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        //realm.beginTransaction()
-
-        val mainActivity = activity as MainActivity
         val result = StatisticsSingleton.stats
 
-
-
-
-        if (result != null){
+        if (result != null) {
 
             //Progressdaily
-            setProgressBar(progressBarDaily,tv_dailyGoals,result.nrOfAchievedDaily,result.nrOfTotalDaily,resources.getString(R.string.daily_progbar))
+            setProgressBar(
+                progressBarDaily,
+                tv_dailyGoals,
+                result.nrOfAchievedDaily,
+                result.nrOfTotalDaily,
+                resources.getString(R.string.daily_progbar)
+            )
 
             //Progressweekly
-            setProgressBar(progressBarWeekly,tv_weeklyGoals,result.nrOfAchievedWeekly,result.nrOfTotalWeekly,resources.getString(R.string.weekly_progbar))
+            setProgressBar(
+                progressBarWeekly,
+                tv_weeklyGoals,
+                result.nrOfAchievedWeekly,
+                result.nrOfTotalWeekly,
+                resources.getString(R.string.weekly_progbar)
+            )
 
             //Progressmonthly
-            setProgressBar(progressBarMonthly,tv_monthlyGoals,result.nrOfAchievedMonthly,result.nrOfTotalMonthly,resources.getString(R.string.monthly_progbar))
+            setProgressBar(
+                progressBarMonthly,
+                tv_monthlyGoals,
+                result.nrOfAchievedMonthly,
+                result.nrOfTotalMonthly,
+                resources.getString(R.string.monthly_progbar)
+            )
 
             //Progressyearly
-            setProgressBar(progressBarYearly,tv_yearlyGoals,result.nrOfAchievedYearly,result.nrOfTotalYearly,resources.getString(R.string.yearly_progbar))
+            setProgressBar(
+                progressBarYearly,
+                tv_yearlyGoals,
+                result.nrOfAchievedYearly,
+                result.nrOfTotalYearly,
+                resources.getString(R.string.yearly_progbar)
+            )
 
             //Progresstotal
-            setProgressBar(progressBarTotal,tv_totalGoals,result.nrOfTotalAchieved,result.nrOfTotal,resources.getString(R.string.total_progbar))
+            setProgressBar(
+                progressBarTotal,
+                tv_totalGoals,
+                result.nrOfTotalAchieved,
+                result.nrOfTotal,
+                resources.getString(R.string.total_progbar)
+            )
 
         }
 
-        //realm.commitTransaction()
     }
 
-    fun setProgressBar(progressBar: ProgressBar, textView: TextView, progress: Int, quantity: Int, period: String){
+    private fun setProgressBar(
+        progressBar: ProgressBar,
+        textView: TextView,
+        progress: Int,
+        quantity: Int,
+        period: String
+    ) {
 
         progressBar.max = quantity
         progressBar.progress = progress
         textView.text =
-            this.resources.getString(R.string.statisticProgressInText,progress,quantity,period)
+            this.resources.getString(R.string.statisticProgressInText, progress, quantity, period)
     }
 }

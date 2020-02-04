@@ -1,11 +1,10 @@
 package at.fhooe.mc.goals.Database
 
 import android.app.Application
-import at.fhooe.mc.goals.Database.MyMigration
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
-class RealmApplication :Application() {
+class RealmApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

@@ -6,7 +6,6 @@ import io.realm.annotations.PrimaryKey
 open class StatisticData(
     @PrimaryKey
     var sID: Int = 0,
-    //val timeStamp: Long = System.currentTimeMillis(),
     var nrOfAchievedDaily: Int = 0,
     var nrOfTotalDaily: Int = 0,
     var nrOfAchievedWeekly: Int = 0,
@@ -18,5 +17,4 @@ open class StatisticData(
     var nrOfTotal: Int = 0,
     var nrOfTotalAchieved: Int = 0
 
-) : RealmObject() {
-}
+) : RealmObject()
