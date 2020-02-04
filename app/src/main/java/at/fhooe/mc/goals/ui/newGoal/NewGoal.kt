@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import at.fhooe.mc.goals.Database.Goal
-import at.fhooe.mc.goals.Database.RecyclerReminderData
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.Database.StatisticData
 import at.fhooe.mc.goals.R
@@ -67,7 +66,7 @@ class NewGoal : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
 
-        saveButton.setOnClickListener {
+        addNewGoalButton.setOnClickListener {
 
 
             realm.executeTransaction {
@@ -107,8 +106,6 @@ class NewGoal : AppCompatActivity() {
             }
             StatisticsSingleton.updateNrOfGoals(currentPeriod, 1)
             realm.commitTransaction()
-
-            RecyclerReminderData.reminderList.clear()
             finish()
         }
 
@@ -236,7 +233,6 @@ class NewGoal : AppCompatActivity() {
                     period = "Yearly"
                 }
             }
-            RecyclerReminderData.addReminder(date, period)
 
 
             val id = UUID.randomUUID().leastSignificantBits.toInt()

@@ -52,7 +52,7 @@ class GoalsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(activity)
 
 
-        activity.fab.show()
+        activity.newGoalButton.show()
 
         realm.beginTransaction()
         val result = realm.where(Goal::class.java).findAll()

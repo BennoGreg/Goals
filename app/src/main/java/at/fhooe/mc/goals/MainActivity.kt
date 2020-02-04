@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var realm: Realm
-    lateinit var fab: FloatingActionButton
+    lateinit var newGoalButton: FloatingActionButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +42,8 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        fab = findViewById(R.id.saveButton)
-        fab.setOnClickListener { view ->
+        newGoalButton = findViewById(R.id.addNewGoalButton)
+        newGoalButton.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
 

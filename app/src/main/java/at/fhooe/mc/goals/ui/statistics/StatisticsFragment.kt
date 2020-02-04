@@ -29,7 +29,7 @@ class StatisticsFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_statistics, container, false)
 
         val activity = activity as MainActivity
-        activity.fab.hide()
+        activity.newGoalButton.hide()
 
         realm = Realm.getDefaultInstance()
 

@@ -20,14 +20,3 @@ open class Reminder(
     var reminderPeriod: Int = 0
 
 ): RealmObject()
-
-class RecyclerReminderData{
-
-    companion object{
-
-        val reminderList = ArrayList<Reminder>()
-        fun addReminder(name: String,time: String){
-
-        }
-    }
-}

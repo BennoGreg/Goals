@@ -69,7 +69,7 @@ class SettingsFragment : Fragment(), View.OnClickListener {
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
 
         val main = activity as MainActivity
-        main.fab.hide()
+        main.newGoalButton.hide()
 
         return root
     }

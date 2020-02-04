@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import at.fhooe.mc.goals.Database.RecyclerReminderData
 import at.fhooe.mc.goals.Database.Reminder
 import at.fhooe.mc.goals.R
 import at.fhooe.mc.goals.ui.statistics.StatisticsSingleton
@@ -122,6 +121,18 @@ class EditGoal : AppCompatActivity() {
                 isAchieved,
                 isEqualFrequency
             )
+
+            for (reminder in reminders) {
+                goal.reminderList?.add(reminder)
+
+                AlarmScheduler.scheduleAlarmsForReminder(
+                    this,
+                    reminder,
+                    reminder.remID.toInt(),
+                    reminder.reminderPeriod,
+                    goalNameEditText.text.toString()
+                )
+            }
 
             realm.commitTransaction()
 
@@ -253,7 +264,6 @@ class EditGoal : AppCompatActivity() {
                     period = "Yearly"
                 }
             }
-            RecyclerReminderData.addReminder(date, period)
 
 
             val id = UUID.randomUUID().leastSignificantBits
